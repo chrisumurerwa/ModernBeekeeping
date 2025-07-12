@@ -1,11 +1,14 @@
-import Image from "next/image";
-import AboutPage from "./components/About";
-export default function Home() {
-  return (
-    <div>
-      {/* Add your content here */}
-      <AboutPage />
-      {/* You can add more components or content as needed */}
-    </div>
-  );
-}
+// import Image from "next/image";
+// import StoriesSection from "../components/StoriesSection";
+
+
+// import MarketSection from "../components/MarketSection";
+// export default function Home() {
+//   return (
+//     <div>
+    
+  
+    
+//     </div>
+//   );
+// }

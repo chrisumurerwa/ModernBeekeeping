@@ -20,18 +20,18 @@ const StoriesSection = ({ title, subtitle, children }) => {
   );
 };
 
-export default function Process() {
+export default function Store() {
   return (
     <div className="min-h-screen bg-[#3C4F2F] font-serif relative">
       <StoriesSection
-        title="Process"
-        subtitle="Learn about our natural honey harvesting methods"
+        title="Store"
+        subtitle="Explore our range of pure wild honey"
       >
         {/* Image at the Top */}
         <div className="text-center mb-8">
           <Image
-            src="/images/bees10.jpg" // Match the image from the card
-            alt="Process Image"
+            src="/images/bees7.jpg" // Match the image from the card
+            alt="Store Image"
             width={300}
             height={300}
             className="rounded-lg object-cover mx-auto border-4 border-[#F4A261]"
@@ -42,22 +42,36 @@ export default function Process() {
         <div className="text-center mb-6">
           <h2 className="text-xl md:text-2xl text-[#F4A261] italic">Fun Fact</h2>
           <p className="mt-2 text-base md:text-lg text-[#2F2F2F]">
-            Honeybees can produce up to 100 pounds of honey in a single season!
+            Raw honey contains natural antioxidants that can boost your immune system!
           </p>
         </div>
 
         {/* Detailed Information */}
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#F4A261] mb-4">Our Process</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-[#F4A261] mb-4">Our Store</h2>
           <p className="text-base md:text-lg text-[#2F2F2F] leading-relaxed">
-            Our honey harvesting process is a careful and natural endeavor, centered on collecting honey from wild beehives in pristine forests. We avoid artificial additives and chemicals, allowing the bees to work in their natural environment. The process begins with locating healthy hives, followed by gentle extraction using traditional methods that minimize disruption. Each jar of honey is a result of the bees’ natural cycle, influenced by the seasons and the diverse flora of our landscapes. This dedication ensures the purity and quality that define our wild honey.
+            Welcome to our store, where you can explore a delightful selection of pure wild honey. From raw, unfiltered honey straight from the hive to specialty blends infused with natural flavors, we offer the finest quality. Each jar is carefully harvested to preserve its natural goodness, delivering the authentic taste of nature to your table. Shop now to experience the richness of our wild honey, with options for single purchases or subscriptions for regular delivery.
           </p>
-          <Link href="/process-details">
+          <Link href="/shop">
             <button
               className="mt-8 flex items-center justify-center gap-2 px-6 py-2 rounded-full text-white transition duration-300 text-sm"
               style={{ backgroundColor: "#F4A261", hover: { backgroundColor: "#E07A44" } }}
             >
-              Learn More
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+                />
+              </svg>
+              Shop Now
             </button>
           </Link>
         </div>

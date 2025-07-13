@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { Input } from "../ui/input"
-import { Button } from "../ui/button"
+import { Button } from "../../Components/ui/button"
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 
 export default function Footer() {

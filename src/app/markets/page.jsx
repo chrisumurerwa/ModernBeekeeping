@@ -1,9 +1,9 @@
-import MarketSection from "@/Components/MarketSection";
+import MarketPage from "../../Components/MarketSection";
 
 export default function MarketsPage() {
   return (
     <main>
-      <MarketSection />
+      <MarketPage />
     </main>
   );
 }

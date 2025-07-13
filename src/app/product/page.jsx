@@ -1,10 +1,10 @@
-import ProductsPage from "@/Components/product"
+import  ProductsPage from "../../Components/Product"
 
 export default function Products()
 {
     return(
         <main>
-        <ProductsPage/>
+        < ProductsPage/>
         </main>
     )
 }

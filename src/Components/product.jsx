@@ -1,11 +1,11 @@
 "use client"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Button } from "../Components/ui/button"
+import { Card, CardContent } from "../Components/ui/card"
+import { Badge } from "../Components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Components/ui/tabs"
 import { Star, ShoppingCart } from "lucide-react"
-import { useCart } from "@/context/CartContext"
+import { useCart } from "../context/CartContext"
 import { toast } from "sonner"
 
 export default function ProductsPage() {

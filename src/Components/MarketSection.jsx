@@ -1,7 +1,7 @@
 import Image from "next/image"
-import { Card, CardContent } from "@/Components/ui/card"
-import { Badge } from "@/Components/ui/badge"
-import { Button } from "@/Components/ui/button"
+import { Card, CardContent } from "../Components/ui/card"
+import { Badge } from "../Components/ui/badge"
+import { Button } from "../Components/ui/button"
 import { MapPin, Phone, Mail, Globe } from "lucide-react"
 
 export default function MarketsPage() {

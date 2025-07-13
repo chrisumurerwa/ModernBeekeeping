@@ -1,5 +1,6 @@
 // "use client"
 
+<<<<<<< HEAD
 // import { useToast } from "@/hooks/use-toast"
 // import {
 //   Toast,
@@ -9,6 +10,17 @@
 //   ToastTitle,
 //   ToastViewport,
 // } from "@/components/ui/toast"
+=======
+import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastClose,
+  ToastDescription,
+  ToastProvider,
+  ToastTitle,
+  ToastViewport,
+} from "@/Components/ui/toast"
+>>>>>>> stories
 
 // export function Toaster() {
 //   const { toasts } = useToast()

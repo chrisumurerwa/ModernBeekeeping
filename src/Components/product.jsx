@@ -44,7 +44,7 @@ export default function ProductsPage() {
       {
         id: 4,
         name: "Pure Beeswax Blocks",
-        price: "$15.99",
+        price: 15.99,
         image: "/Honey5.jpg",
         description: "100% pure beeswax for crafting and cosmetics",
         badges: ["Pure", "Filtered"],
@@ -53,7 +53,7 @@ export default function ProductsPage() {
       {
         id: 5,
         name: "Beeswax Candles Set",
-        price: "$32.99",
+        price: 32.99,
         image: "/Honey6.jpg",
         description: "Hand-dipped candles that burn clean and long",
         badges: ["Handmade", "Set of 6"],
@@ -64,7 +64,7 @@ export default function ProductsPage() {
       {
         id: 6,
         name: "Fresh Royal Jelly",
-        price: "$89.99",
+        price: 89.99,
         image: "/Honey7.jpg",
         description: "Nature's superfood packed with nutrients",
         badges: ["Fresh", "Premium"],
@@ -73,7 +73,7 @@ export default function ProductsPage() {
       {
         id: 7,
         name: "Bee Pollen Granules",
-        price: "$34.99",
+        price: 34.99,
         image: "/Honey8.jpg",
         description: "Pure bee pollen rich in proteins and vitamins",
         badges: ["Organic", "Raw"],
@@ -82,7 +82,7 @@ export default function ProductsPage() {
       {
         id: 8,
         name: "Propolis Tincture",
-        price: "$42.99",
+        price: 42.9,
         image: "/Honey9.jpg",
         description: "Natural immune system support",
         badges: ["Concentrated", "Alcohol-Free"],
@@ -126,11 +126,14 @@ export default function ProductsPage() {
         <p className="text-gray-600 mb-4">{product.description}</p>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-amber-600">{product.price}</span>
-          <Button className="bg-amber-600 hover:bg-amber-700" 
-          onClick={() => {addToCart(product)
-            toast.success("Added to cart ✅")
-          }
-          }>
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700" 
+            suppressHydrationWarning={true}
+            onClick={() => {
+              addToCart(product)
+              toast.success("Added to cart ✅")
+            }}
+          >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
           </Button>
@@ -219,28 +222,28 @@ export default function ProductsPage() {
           <h2 className="text-4xl font-bold mb-8">Quality You Can Trust</h2>
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">✓</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Organic Certified</h3>
               <p className="text-gray-600">All products meet strict organic standards</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">★</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Premium Quality</h3>
               <p className="text-gray-600">Rigorous testing ensures the highest quality</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">♻</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Sustainable</h3>
               <p className="text-gray-600">Environmentally responsible production</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">❤</span>
               </div>
               <h3 className="text-xl font-bold mb-2">Fair Trade</h3>

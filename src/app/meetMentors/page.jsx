@@ -1,4 +1,4 @@
-import MeetMentors from "../../Components/MeetMentors";
+import MeetMentors from "../../components/MeetMentors";
 
 export default function MeetMentorPage() {
   return (

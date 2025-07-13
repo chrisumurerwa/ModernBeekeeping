@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/Components/ui/card";
-import { Badge } from "@/Components/ui/badge";
-import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "components/ui/card.jsx";
+import { Badge } from "components/ui/badge.jsx";
+
+import { Button } from "components/ui/button";
 import { Calendar, Clock, User } from "lucide-react";
 
 export default function StoriesPage() {

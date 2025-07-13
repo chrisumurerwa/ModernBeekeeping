@@ -1,4 +1,4 @@
-import StoriesSection from "../../Components/StoriesSection";
+import StoriesSection from "../../components/StoriesSection";
 
 export default function StoryPage() {
   return (

@@ -1,4 +1,4 @@
-import MarketSection from "@/Components/MarketSection";
+import MarketSection from "components/MarketSection";
 
 export default function MarketsPage() {
   return (

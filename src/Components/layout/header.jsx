@@ -1,8 +1,8 @@
 "use client"
 import { useState } from "react"
 import Link from "next/link"
-import { Button } from "@/Components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/Components/ui/sheet"
+import { Button } from "../ui/button"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { Menu, ShoppingCart, Search } from "lucide-react"
 
 export default function Header() {

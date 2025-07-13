@@ -1,12 +1,12 @@
-"use client"
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "../ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
-import { Menu, ShoppingCart, Search } from "lucide-react"
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Menu, ShoppingCart, Search } from "lucide-react";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigation = [
     { name: "Home", href: "/" },
@@ -17,7 +17,7 @@ export default function Header() {
     { name: "Markets", href: "/markets" },
     { name: "Contact", href: "/contact" },
     { name: "FAQ", href: "/faq" },
-  ]
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
@@ -50,12 +50,13 @@ export default function Header() {
           {/* Actions */}
           <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" className="hidden md:flex">
-              <Search className="w-4 h-4" />
+              <Search className="w-4 h-4 text-black" /> {/* Set icon to black */}
             </Button>
-         <Link href="/cart">  <Button variant="ghost" size="sm">
-              <ShoppingCart className="w-4 h-4" />
-            </Button>
-            </Link> 
+            <Link href="/cart">
+              <Button variant="ghost" size="sm">
+                <ShoppingCart className="w-4 h-4 text-black" /> {/* Set icon to black */}
+              </Button>
+            </Link>
             <Button className="hidden md:flex bg-amber-600 hover:bg-amber-700">Shop Now</Button>
 
             {/* Mobile Menu */}
@@ -87,5 +88,5 @@ export default function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

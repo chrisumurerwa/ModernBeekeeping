@@ -7,13 +7,13 @@ const StoriesSection = ({ title, subtitle, children }) => {
   return (
     <div>
       {/* Header Section with Orange Theme */}
-      <header className="bg-[#F4A261] text-white text-center py-12 px-6">
+      <header className="bg-amber-600 text-white text-center py-12 px-6">
         <h1 className="text-4xl md:text-5xl font-bold">{title}</h1>
         <p className="mt-2 text-lg md:text-xl">{subtitle}</p>
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto py-16 px-6 md:px-16 bg-white text-[#2F2F2F]">
+      <main className="container mx-auto py-16 px-6 md:px-16 bg-[#F9F5F0] text-[#2F2F2F]">
         {children}
       </main>
     </div>
@@ -22,7 +22,7 @@ const StoriesSection = ({ title, subtitle, children }) => {
 
 export default function Store() {
   return (
-    <div className="min-h-screen bg-[#3C4F2F] font-serif relative">
+    <div className="min-h-screen bg-[#F9F5F0] font-serif relative">
       <StoriesSection
         title="Store"
         subtitle="Explore our range of pure wild honey"
@@ -34,13 +34,13 @@ export default function Store() {
             alt="Store Image"
             width={300}
             height={300}
-            className="rounded-lg object-cover mx-auto border-4 border-[#F4A261]"
+            className="rounded-lg object-cover mx-auto border-4 border-amber-600"
           />
         </div>
 
         {/* Fun Fact */}
         <div className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl text-[#F4A261] italic">Fun Fact</h2>
+          <h2 className="text-xl md:text-2xl text-amber-600 italic">Fun Fact</h2>
           <p className="mt-2 text-base md:text-lg text-[#2F2F2F]">
             Raw honey contains natural antioxidants that can boost your immune system!
           </p>
@@ -48,14 +48,14 @@ export default function Store() {
 
         {/* Detailed Information */}
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#F4A261] mb-4">Our Store</h2>
+          <h2 className="text-2xl md:text-3xl font-bold text-amber-600 mb-4">Our Store</h2>
           <p className="text-base md:text-lg text-[#2F2F2F] leading-relaxed">
             Welcome to our store, where you can explore a delightful selection of pure wild honey. From raw, unfiltered honey straight from the hive to specialty blends infused with natural flavors, we offer the finest quality. Each jar is carefully harvested to preserve its natural goodness, delivering the authentic taste of nature to your table. Shop now to experience the richness of our wild honey, with options for single purchases or subscriptions for regular delivery.
           </p>
           <Link href="/shop">
             <button
               className="mt-8 flex items-center justify-center gap-2 px-6 py-2 rounded-full text-white transition duration-300 text-sm"
-              style={{ backgroundColor: "#F4A261", hover: { backgroundColor: "#E07A44" } }}
+              style={{ backgroundColor: "#d97706", hover: { backgroundColor: "#c2410c" } }} // Using amber-600 with amber-700 hover
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

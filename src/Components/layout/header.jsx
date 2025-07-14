@@ -12,11 +12,8 @@ export default function Header() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Products", href: "/product" },
-    { name: "Stories", href: "/stories" },
     { name: "Partners", href: "/partners" },
-    { name: "Markets", href: "/markets" },
     { name: "Contact", href: "/contact" },
-    { name: "FAQ", href: "/faq" },
   ];
 
   return (
@@ -49,15 +46,12 @@ export default function Header() {
 
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="hidden md:flex">
-              <Search className="w-4 h-4 text-black" /> {/* Set icon to black */}
-            </Button>
             <Link href="/cart">
               <Button variant="ghost" size="sm">
                 <ShoppingCart className="w-4 h-4 text-black" /> {/* Set icon to black */}
               </Button>
             </Link>
-            <Button className="hidden md:flex bg-amber-600 hover:bg-amber-700">Shop Now</Button>
+            <Button className="hidden md:flex bg-amber-600 hover:bg-amber-700 text-white">Shop Now</Button>
 
             {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>

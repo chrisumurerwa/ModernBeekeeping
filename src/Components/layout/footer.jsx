@@ -1,7 +1,8 @@
 "use client"
+
 import Link from "next/link"
-import { Input } from "../ui/input"
-import { Button } from "../ui/button"
+import { Input } from "../../Components/ui/input"
+import { Button } from "../../Components/ui/button"
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react"
 
 export default function Footer() {
@@ -109,7 +110,10 @@ export default function Footer() {
             </p>
             <div className="flex gap-2">
               <Input type="email" placeholder="Your email" className="bg-gray-800 border-gray-700 text-white" />
-              <Button className="bg-amber-600 hover:bg-amber-700">Subscribe</Button>
+              <Button  
+               suppressHydrationWarning={true} 
+               className="bg-amber-600 hover:bg-amber-700">
+                Subscribe</Button>
             </div>
           </div>
         </div>
@@ -118,7 +122,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Modern Beekeeping Company. All rights reserved.
+              © 2025 Modern Beekeeping Company. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="#" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">

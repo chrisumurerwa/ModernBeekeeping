@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/Components/ui/card"
 import { Badge } from "@/Components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
 import { Star, ShoppingCart } from "lucide-react"
-import { useCart } from "@/context/CartContext"
+import { useCart } from "../context/CartContext"
 import { toast } from "sonner"
 
 export default function ProductsPage() {
@@ -26,7 +26,7 @@ export default function ProductsPage() {
         name: "Acacia Honey",
         price: "$28.99",
         image: "/Honey2.jpg",
-        description: "Light, delicate honey with floral notes",
+        description: "Light, delicate honey with rich floral notes and a smooth, golden finish",
         badges: ["Premium", "Limited"],
         rating: 4.8,
       },
@@ -44,7 +44,7 @@ export default function ProductsPage() {
       {
         id: 4,
         name: "Pure Beeswax Blocks",
-        price: "$15.99",
+        price: 15.99,
         image: "/Honey5.jpg",
         description: "100% pure beeswax for crafting and cosmetics",
         badges: ["Pure", "Filtered"],
@@ -53,7 +53,7 @@ export default function ProductsPage() {
       {
         id: 5,
         name: "Beeswax Candles Set",
-        price: "$32.99",
+        price: 32.99,
         image: "/Honey6.jpg",
         description: "Hand-dipped candles that burn clean and long",
         badges: ["Handmade", "Set of 6"],
@@ -64,7 +64,7 @@ export default function ProductsPage() {
       {
         id: 6,
         name: "Fresh Royal Jelly",
-        price: "$89.99",
+        price: 89.99,
         image: "/Honey7.jpg",
         description: "Nature's superfood packed with nutrients",
         badges: ["Fresh", "Premium"],
@@ -73,7 +73,7 @@ export default function ProductsPage() {
       {
         id: 7,
         name: "Bee Pollen Granules",
-        price: "$34.99",
+        price: 34.99,
         image: "/Honey8.jpg",
         description: "Pure bee pollen rich in proteins and vitamins",
         badges: ["Organic", "Raw"],
@@ -82,7 +82,7 @@ export default function ProductsPage() {
       {
         id: 8,
         name: "Propolis Tincture",
-        price: "$42.99",
+        price: 42.9,
         image: "/Honey9.jpg",
         description: "Natural immune system support",
         badges: ["Concentrated", "Alcohol-Free"],
@@ -92,10 +92,10 @@ export default function ProductsPage() {
   }
 
   const ProductCard = ({ product }) => (
-    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
       <div className="relative h-64 overflow-hidden">
         <Image
-          src={product.image || "/placeholder.svg"}
+          src={product.image}
           alt={product.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -110,27 +110,19 @@ export default function ProductsPage() {
       </div>
       <CardContent className="p-6">
         <div className="flex items-center mb-2">
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-gray-300"
-                }`}
-              />
-            ))}
-            <span className="ml-2 text-sm text-gray-600">({product.rating})</span>
-          </div>
         </div>
-        <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+        <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
         <p className="text-gray-600 mb-4">{product.description}</p>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-amber-600">{product.price}</span>
-          <Button className="bg-amber-600 hover:bg-amber-700" 
-          onClick={() => {addToCart(product)
-            toast.success("Added to cart ✅")
-          }
-          }>
+          <Button 
+            className="bg-amber-600 text-white hover:bg-amber-700" 
+            suppressHydrationWarning={true}
+            onClick={() => {
+              addToCart(product)
+              toast.success("Added to cart ")
+            }}
+          >
             <ShoppingCart className="w-4 h-4 mr-2" />
             Add to Cart
           </Button>
@@ -153,7 +145,7 @@ export default function ProductsPage() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="honey" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12">
+            <TabsList className="grid w-full grid-cols-3 mb-12 text-black ">
               <TabsTrigger value="honey" className="text-lg">
                 Honey Products
               </TabsTrigger>
@@ -167,7 +159,7 @@ export default function ProductsPage() {
 
             <TabsContent value="honey">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Premium Honey Collection</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black">Premium Honey Collection</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Our honey is harvested with care, maintaining all natural enzymes and nutrients that make each variety
                   unique and beneficial.
@@ -182,7 +174,7 @@ export default function ProductsPage() {
 
             <TabsContent value="wax">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Pure Beeswax Products</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black">Pure Beeswax Products</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Our beeswax is carefully filtered and processed to maintain its natural properties, perfect for
                   crafting, cosmetics, and home use.
@@ -197,7 +189,8 @@ export default function ProductsPage() {
 
             <TabsContent value="supplements">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Natural Health Supplements</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black
+                ">Natural Health Supplements</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Harness the power of the hive with our range of natural supplements, each packed with unique nutrients
                   and health benefits.
@@ -216,34 +209,34 @@ export default function ProductsPage() {
       {/* Quality Assurance */}
       <section className="py-20 bg-gradient-to-r from-green-50 to-amber-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">Quality You Can Trust</h2>
+          <h2 className="text-4xl font-bold mb-8 text-black">Quality You Can Trust</h2>
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">✓</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Organic Certified</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Organic Certified</h3>
               <p className="text-gray-600">All products meet strict organic standards</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">★</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Premium Quality</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Premium Quality</h3>
               <p className="text-gray-600">Rigorous testing ensures the highest quality</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">♻</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Sustainable</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Sustainable</h3>
               <p className="text-gray-600">Environmentally responsible production</p>
             </div>
             <div>
-              <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">❤</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Fair Trade</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Fair Trade</h3>
               <p className="text-gray-600">Supporting local beekeeping communities</p>
             </div>
           </div>

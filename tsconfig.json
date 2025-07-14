@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/Components/ui/accordion.tsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -93,27 +93,13 @@ export default function MarketsPage() {
   return (
     <div className="min-h-screen">
    
-      <section className="relative h-96 flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
-        <Image
-  src="https://images.unsplash.com/photo-1597266833335-ccd08f703654?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fEV4cG9ydCUyMCUyNiUyMGxvZ2lzdGljc3xlbnwwfHwwfHx8MA%3D%3D"
-  alt="Global markets map"
-  fill
-  className="object-cover"
-/>
-        <div className="relative z-20 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Markets We Serve</h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            From Rwanda to the World - Bringing premium honey to six continents
-          </p>
-        </div>
-      </section>
+      
 
     
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl text-amber-800 font-bold mb-4">Regional Markets</h2>
+            <h2 className="text-6xl text-amber-800 font-bold mb-4">Regional Markets</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Each region has its own dedicated team and distribution network to ensure the best service and freshest
               products for our customers.

@@ -13,7 +13,7 @@ export default function MarketsPage() {
       description: "Our home base where it all began. Serving local and regional markets with fresh, premium honey.",
       contact: {
         phone: "+250 788 123 456",
-        email: "eastafrica@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "KG 15 Ave, Kigali, Rwanda",
       },
       image: "https://images.unsplash.com/photo-1489392191049-fc10c97e64b6?q=80&w=1167&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -26,7 +26,7 @@ export default function MarketsPage() {
       description: "Serving premium European markets with sustainable, organic honey products.",
       contact: {
         phone: "+44 20 7123 4567",
-        email: "europe@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "123 Honey Lane, London, UK",
       },
       image: "https://images.unsplash.com/photo-1579158949482-3e9e0ac69333?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGV1cm9wZXxlbnwwfHwwfHx8MA%3D%3D",
@@ -39,7 +39,7 @@ export default function MarketsPage() {
       description: "Bringing authentic African honey to North American consumers and businesses.",
       contact: {
         phone: "+1 212 555 0123",
-        email: "northamerica@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "456 Park Avenue, New York, NY",
       },
       image: "https://images.unsplash.com/photo-1604549944235-3e5579b15cc2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bm9ydGglMjBhbWVyaWNhfGVufDB8fDB8fHww",
@@ -52,7 +52,7 @@ export default function MarketsPage() {
       description: "Expanding into Asian markets with premium honey and wellness products.",
       contact: {
         phone: "+65 6123 4567",
-        email: "asiapacific@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "Marina Bay, Singapore",
       },
       image: "https://images.unsplash.com/photo-1557405939-2a4344e40875?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXNpYSUyMHBhc2ZpY3F1ZXxlbnwwfHwwfHx8MA%3D%3D",
@@ -65,7 +65,7 @@ export default function MarketsPage() {
       description: "Serving the Middle Eastern market with premium honey for luxury hospitality.",
       contact: {
         phone: "+971 4 123 4567",
-        email: "middleeast@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "Dubai International Financial Centre",
       },
       image: "https://images.unsplash.com/photo-1691441799387-722f8cfaa1d9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c291dGglMjBhbWVyaWNhfGVufDB8fDB8fHww",
@@ -79,7 +79,7 @@ export default function MarketsPage() {
       description: "Our newest market, bringing sustainable honey to South American consumers.",
       contact: {
         phone: "+55 11 1234 5678",
-        email: "southamerica@modernbeekeeping.com",
+        email: "info@modernbeekeeping.com",
         address: "Avenida Paulista, São Paulo",
       },
       image: "https://images.unsplash.com/photo-1691441799387-722f8cfaa1d9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c291dGglMjBhbWVyaWNhfGVufDB8fDB8fHww",
@@ -92,28 +92,10 @@ export default function MarketsPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-96 flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
-        <Image
-  src="https://images.unsplash.com/photo-1597266833335-ccd08f703654?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fEV4cG9ydCUyMCUyNiUyMGxvZ2lzdGljc3xlbnwwfHwwfHx8MA%3D%3D"
-  alt="Global markets map"
-  fill
-  className="object-cover"
-/>
-        <div className="relative z-20 text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">Markets We Serve</h1>
-          <p className="text-xl max-w-2xl mx-auto">
-            From Rwanda to the World - Bringing premium honey to six continents
-          </p>
-        </div>
-      </section>
-
-    
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl text-amber-800 font-bold mb-4">Regional Markets</h2>
+            <h2 className="text-6xl text-amber-800 font-bold mb-4">Regional Markets</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Each region has its own dedicated team and distribution network to ensure the best service and freshest
               products for our customers.

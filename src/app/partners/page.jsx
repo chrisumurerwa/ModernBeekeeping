@@ -2,7 +2,8 @@ import Image from "next/image";
 import { Button } from "../../Components/ui/button";
 import { Card, CardContent } from "../../Components/ui/card";
 import { Badge } from "../../Components/ui/badge";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Component } from "lucide-react";
+import MarketsPage from "../../Components/MarketSection"
 
 export default function PartnersPage() {
   const partners = {
@@ -85,7 +86,7 @@ export default function PartnersPage() {
       },
     ],
   };
-
+<MarketsPage/>
   const PartnerCard = ({ partner, category }) => (
     <Card className="hover:shadow-xl transition-shadow">
       <CardContent className="p-6">
@@ -296,9 +297,11 @@ export default function PartnersPage() {
             >
               Download Catalog
             </Button>
+           
           </div>
         </div>
       </section>
+     
     </div>
   );
 }

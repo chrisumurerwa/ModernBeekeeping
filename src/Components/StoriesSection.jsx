@@ -91,21 +91,12 @@ export default function StoriesPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-amber-600">
-        <div className="text-center text-white">
-          <h1 className="text-5xl font-bold mb-4">The Bees' World</h1>
-          <p className="text-xl">Stories, insights, and education about the fascinating world of bees</p>
-        </div>
-      </section>
-
-      {/* Featured Story */}
       {featuredStory && (
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <Badge className="text-amber-800 text-2xl mb-2">Featured Story</Badge>
-              <h2 className="text-3xl text-black font-bold">Latest Insights</h2>
+              <Badge className="text-amber-800 text-7xl mb-2">Featured Story</Badge>
+              <h2 className="text-5xl text-black font-bold">The Bees' World</h2>
             </div>
             <Card className="overflow-hidden max-w-4xl mx-auto hover:shadow-xl transition-shadow">
               <div className="grid lg:grid-cols-2 gap-0">
@@ -186,26 +177,7 @@ export default function StoriesPage() {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className="py-20 bg-amber-600 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">Our Impact Through Education</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="text-4xl font-bold mb-2">50,000+</div>
-              <p className="text-lg">People educated about bee conservation</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">200+</div>
-              <p className="text-lg">Local beekeepers trained</p>
-            </div>
-            <div>
-              <div className="text-4xl font-bold mb-2">15</div>
-              <p className="text-lg">Schools with bee education programs</p>
-            </div>
-          </div>
-        </div>
-      </section>
+     
     </div>
   );
 }

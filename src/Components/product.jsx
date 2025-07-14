@@ -26,7 +26,7 @@ export default function ProductsPage() {
         name: "Acacia Honey",
         price: "$28.99",
         image: "/Honey2.jpg",
-        description: "Light, delicate honey with floral notes",
+        description: "Light, delicate honey with rich floral notes and a smooth, golden finish",
         badges: ["Premium", "Limited"],
         rating: 4.8,
       },
@@ -92,10 +92,10 @@ export default function ProductsPage() {
   }
 
   const ProductCard = ({ product }) => (
-    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group">
+    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
       <div className="relative h-64 overflow-hidden">
         <Image
-          src={product.image || "/placeholder.svg"}
+          src={product.image}
           alt={product.name}
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -110,24 +110,13 @@ export default function ProductsPage() {
       </div>
       <CardContent className="p-6">
         <div className="flex items-center mb-2">
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(product.rating) ? "fill-amber-400 text-amber-400" : "text-gray-300"
-                }`}
-              />
-            ))}
-            <span className="ml-2 text-sm text-gray-600">({product.rating})</span>
-          </div>
         </div>
         <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
         <p className="text-gray-600 mb-4">{product.description}</p>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-amber-600">{product.price}</span>
           <Button 
-            className="bg-amber-600 hover:bg-amber-700" 
+            className="bg-amber-600 text-white hover:bg-amber-700" 
             suppressHydrationWarning={true}
             onClick={() => {
               addToCart(product)

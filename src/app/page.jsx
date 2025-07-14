@@ -90,7 +90,7 @@ export default function Page() {
               alt={section.title}
               width={100}
               height={100}
-              className="mt-[-20px] rounded-full object-cover border-2 border-amber-600"
+              className="mt-[20px] rounded-full w-24 h-24"
             />
             <h3 className="text-white text-base font-bold mb-1">{section.title}</h3>
             <p className="text-white text-xs flex-grow">{section.description}</p>

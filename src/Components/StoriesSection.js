@@ -91,7 +91,7 @@ export default function StoriesPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+    
       <section className="relative h-64 flex items-center justify-center bg-amber-500">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4">The Bees' World</h1>
@@ -99,7 +99,7 @@ export default function StoriesPage() {
         </div>
       </section>
 
-      {/* Featured Story */}
+     
       {featuredStory && (
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">

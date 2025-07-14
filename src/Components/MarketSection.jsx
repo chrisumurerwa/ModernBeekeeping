@@ -92,7 +92,7 @@ export default function MarketsPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+   
       <section className="relative h-96 flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
         <Image
@@ -169,7 +169,6 @@ export default function MarketsPage() {
         </div>
       </section>
 
-      {/* Distribution Network */}
       <section className="py-20 bg-gradient-to-b from-green-50 to-amber-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">

@@ -92,7 +92,7 @@ export default function StoriesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-amber-500">
+      <section className="relative h-64 flex items-center justify-center bg-amber-600">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4">The Bees' World</h1>
           <p className="text-xl">Stories, insights, and education about the fascinating world of bees</p>

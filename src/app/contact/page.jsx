@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Button } from "../../components/ui/button";
-import { Card, CardContent } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
+import { Button } from "../../Components/ui/button";
+import { Card, CardContent } from "../../Components/ui/card";
+import { Input } from "../../Components/ui/input";
 import { Textarea } from "../../Components/ui/textarea";
 import {
   Select,

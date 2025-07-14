@@ -92,21 +92,13 @@ export default function PartnersPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="relative h-12 w-32">
             <Image
-              src={partner.logo || "/placeholder.svg"}
-              alt={`${partner.name} logo`}
+              src="https://images.unsplash.com/photo-1542690969-5a2050285637?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTF8fHxlbnwwfHx8fHw%3D"
+              alt="Generic Partner Logo"
               fill
-              className="object-contain"
+              className="object-cover rounded-lg shadow-sm"
             />
           </div>
-          <div className="mr-4">
-            <Image
-              src="/images/images.jpg"
-              alt="Additional Partner Image"
-              width={300}
-              height={400}
-              className="rounded-lg object-cover shadow-md"
-            />
-          </div>
+        
           <Badge className="bg-amber-100 text-amber-800">{partner.type}</Badge>
         </div>
         <h3 className="text-xl font-bold mb-2">{partner.name}</h3>
@@ -130,7 +122,7 @@ export default function PartnersPage() {
       <section className="relative h-96 flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
         <Image
-          src="/placeholder.svg?height=600&width=1200"
+          src="https://images.unsplash.com/photo-1529391387768-ab39476d6a52?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8fA%3D%3D"
           alt="Partnership collaboration"
           fill
           className="object-cover"

@@ -51,7 +51,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-green-600 to-green-700">
+      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r bg-amber-500">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4 ">Contact Us</h1>
           <p className="text-xl">Get in touch with our team worldwide</p>

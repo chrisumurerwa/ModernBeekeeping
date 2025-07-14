@@ -122,7 +122,7 @@ export default function ProductsPage() {
             <span className="ml-2 text-sm text-gray-600">({product.rating})</span>
           </div>
         </div>
-        <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+        <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
         <p className="text-gray-600 mb-4">{product.description}</p>
         <div className="flex justify-between items-center">
           <span className="text-2xl font-bold text-amber-600">{product.price}</span>
@@ -131,7 +131,7 @@ export default function ProductsPage() {
             suppressHydrationWarning={true}
             onClick={() => {
               addToCart(product)
-              toast.success("Added to cart ✅")
+              toast.success("Added to cart ")
             }}
           >
             <ShoppingCart className="w-4 h-4 mr-2" />
@@ -156,7 +156,7 @@ export default function ProductsPage() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="honey" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12">
+            <TabsList className="grid w-full grid-cols-3 mb-12 text-black ">
               <TabsTrigger value="honey" className="text-lg">
                 Honey Products
               </TabsTrigger>
@@ -170,7 +170,7 @@ export default function ProductsPage() {
 
             <TabsContent value="honey">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Premium Honey Collection</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black">Premium Honey Collection</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Our honey is harvested with care, maintaining all natural enzymes and nutrients that make each variety
                   unique and beneficial.
@@ -185,7 +185,7 @@ export default function ProductsPage() {
 
             <TabsContent value="wax">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Pure Beeswax Products</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black">Pure Beeswax Products</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Our beeswax is carefully filtered and processed to maintain its natural properties, perfect for
                   crafting, cosmetics, and home use.
@@ -200,7 +200,8 @@ export default function ProductsPage() {
 
             <TabsContent value="supplements">
               <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">Natural Health Supplements</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black
+                ">Natural Health Supplements</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                   Harness the power of the hive with our range of natural supplements, each packed with unique nutrients
                   and health benefits.
@@ -219,34 +220,34 @@ export default function ProductsPage() {
       {/* Quality Assurance */}
       <section className="py-20 bg-gradient-to-r from-green-50 to-amber-50">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8">Quality You Can Trust</h2>
+          <h2 className="text-4xl font-bold mb-8 text-black">Quality You Can Trust</h2>
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">✓</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Organic Certified</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Organic Certified</h3>
               <p className="text-gray-600">All products meet strict organic standards</p>
             </div>
             <div>
               <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">★</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Premium Quality</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Premium Quality</h3>
               <p className="text-gray-600">Rigorous testing ensures the highest quality</p>
             </div>
             <div>
               <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">♻</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Sustainable</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Sustainable</h3>
               <p className="text-gray-600">Environmentally responsible production</p>
             </div>
             <div>
               <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-white font-bold text-xl">❤</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Fair Trade</h3>
+              <h3 className="text-xl font-bold mb-2 text-black">Fair Trade</h3>
               <p className="text-gray-600">Supporting local beekeeping communities</p>
             </div>
           </div>

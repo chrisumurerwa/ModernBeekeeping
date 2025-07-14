@@ -225,7 +225,7 @@ export default function FAQPage() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-20 bg-green-600 text-white text-center">
+      <section className="py-20 bg-amber-600 text-white text-center">
         <div className="container mx-auto px-4">
           <h2 className="text-4xl font-bold mb-4">Didn't Find Your Answer?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -234,7 +234,7 @@ export default function FAQPage() {
           </p>
           <Button
             size="lg"
-            className="bg-white text-green-600 hover:bg-gray-100 px-8"
+            className="bg-white text-amber-600 hover:bg-gray-100 px-8"
           >
             Contact Our Team
           </Button>

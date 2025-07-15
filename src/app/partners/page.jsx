@@ -3,7 +3,7 @@ import { Button } from "../../Components/ui/button";
 import { Card, CardContent } from "../../Components/ui/card";
 import { Badge } from "../../Components/ui/badge";
 import { Star, Quote } from "lucide-react";
-
+import MarketsPage from "../../Components/MarketSection"
 export default function PartnersPage() {
   const partners = {
     restaurants: [
@@ -299,6 +299,7 @@ export default function PartnersPage() {
           </div>
         </div>
       </section>
+      <MarketsPage/>
     </div>
   );
 }

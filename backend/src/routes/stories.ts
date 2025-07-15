@@ -1,6 +1,6 @@
 import { Router } from "express";
-import {createStory,getAllStories,getStoryById,updateStory,deleteStory}from "../Controllers/StoryController";
-import { upload } from "../middlewares/upload";
+import {createStory,getAllStories,getStoryById,updateStory,deleteStory}from "../controller/StoryController";
+import { upload } from "../middleware/upload";
 const router = Router();
 
 router.post("/",upload.single("coverImage"), createStory);

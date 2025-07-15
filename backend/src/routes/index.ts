@@ -2,8 +2,9 @@
 import Product from "./productRoute"
 import User from "./authRoute"
 
-//victorie
 
+//victorie
+import stories from"./stories"
 
 
 
@@ -22,7 +23,7 @@ router.use("/user",User)
 
 //victorie
 
-
+router.use("/stories",stories)
 
 //deborah
 

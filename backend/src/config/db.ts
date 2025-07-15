@@ -1,23 +1,18 @@
 import { DataSource } from "typeorm";
-import { User } from "../entity/userEntity";
-import { Token } from "../entity/Token";
-import { Product } from "../entity/productEntity";
-import * as dotenv from "dotenv";
+import { Story } from "../entity/storyEntity";
+import dotenv from "dotenv";
+
 dotenv.config();
-export const AppDataSource=new DataSource(
-{
-type:"postgres",
-host:process.env.DB_HOST,
- port: 5432,
- username: process.env.DB_USERNAME,
- password: process.env.DB_PASSWORD,
- database: process.env.DB_NAME,
- synchronize: true,
- logging: ["error"],
- entities: [User,Token,Product],
- migrations: [],
- subscribers: [],
-})
+
+export const AppDataSource = new DataSource({
+  type: "postgres",
+  url: process.env.POSTGRES_URL,
+  synchronize: true,
+  logging: true,
+  ssl: { rejectUnauthorized: false },  // ✅ required for self-signed
+  entities: [Story],
+});
+
 
 export const InitializeDatabase = async():Promise<void>=>
 {

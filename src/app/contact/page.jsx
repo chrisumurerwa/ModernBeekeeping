@@ -59,7 +59,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-20 bg-white">
+      <section className=" py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
@@ -68,11 +68,11 @@ export default function ContactPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2 text-black">
+                    <label className="border-none block text-sm font-medium mb-2 text-black">
                       First Name
                     </label>
                     <Input
-                      className="text-black"
+                      className="text-gray-500 border border-gray-300"
                       type="text"
                       name="firstName"
                       placeholder="Your first name"
@@ -85,7 +85,7 @@ export default function ContactPage() {
                       Last Name
                     </label>
                     <Input
-                      className="text-black"
+                      className="text-gray-500 border border-gray-300"
                       name="lastName"
                       placeholder="Your last name"
                       value={formData.lastName}
@@ -98,7 +98,7 @@ export default function ContactPage() {
                     Email
                   </label>
                   <Input
-                    className="text-black"
+                    className="text-gray-500 border border-gray-300"
                     type="email"
                     name="email"
                     placeholder="your.email@example.com"
@@ -111,7 +111,7 @@ export default function ContactPage() {
                     Phone
                   </label>
                   <Input
-                    className="text-black"
+                    className="text-gray-500 border border-gray-300"
                     type="tel"
                     name="phone"
                     placeholder="+250 788 123 456"
@@ -128,10 +128,10 @@ export default function ContactPage() {
                       setFormData((prev) => ({ ...prev, subject: value }))
                     }
                   >
-                    <SelectTrigger className="text-black">
+                    <SelectTrigger className="text-gray-500 border border-gray-300">
                       <SelectValue placeholder="Select a subject" />
                     </SelectTrigger>
-                    <SelectContent className="text-black">
+                    <SelectContent className="text-black bg-amber-50">
                       <SelectItem value="general">General Inquiry</SelectItem>
                       <SelectItem value="partnership">
                         Partnership Opportunity
@@ -151,7 +151,7 @@ export default function ContactPage() {
                   <Textarea
                     name="message"
                     placeholder="Tell us how we can help you..."
-                    className="min-h-32 text-black"
+                    className="min-h-32 text-gray-500 border border-gray-300"
                     value={formData.message}
                     onChange={handleInputChange}
                   />
@@ -293,19 +293,14 @@ export default function ContactPage() {
                 <p className="text-sm text-gray-600">
                   KG 15 Avenue, Kigali, Rwanda
                 </p>
-                <Button
-                  size="sm"
-                  className="mt-3 bg-amber-600 hover:bg-amber-700"
-                >
-                  Get Directions
-                </Button>
+               
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Regional Offices */}
+    
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">

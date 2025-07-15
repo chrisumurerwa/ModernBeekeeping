@@ -89,7 +89,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Market Section */}
+      
       <MarketsPage />
     </div>
   );

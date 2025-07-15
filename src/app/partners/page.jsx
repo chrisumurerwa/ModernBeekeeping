@@ -51,7 +51,7 @@ export default function PartnersPage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+   
       <section className="relative h-96 flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
         <Image
@@ -69,7 +69,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Partners Section */}
+      
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4 text-black">
           <div className="text-center mb-16">

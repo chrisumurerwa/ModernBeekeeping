@@ -3,9 +3,14 @@ import {
   Entity, PrimaryGeneratedColumn, Column,
   CreateDateColumn, UpdateDateColumn, Unique,OneToMany,OneToOne
 } from 'typeorm';
+import { Product } from './productEntity';
+import { Token } from './Token';
 export enum UserRole {
-  USER = 'user',
   ADMIN = 'admin',
+  USER='user',
+  NUTRITIONIST = 'nutritionist',
+  COACH = 'coach',
+  RESTAURANT_OWNER = 'restaurantOwner',
 }
  
 @Entity()
@@ -26,7 +31,6 @@ export class User {
   @Column({
   type: 'enum',
   enum: UserRole,
-  default: UserRole.USER,
 })
 role!: UserRole;
 
@@ -45,5 +49,12 @@ role!: UserRole;
 
   @UpdateDateColumn()
   updatedAt!: Date;
+
+  @OneToMany(() => Token, (token) => token.user, { cascade: true })
+  tokens!: Token[];
+
+  // OneToMany relationship
+  @OneToMany(() => Product, (product) => product.user)
+  products!: Product[];
 
 }

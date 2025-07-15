@@ -64,11 +64,10 @@ export default function PartnersPage() {
         <div className="flex items-center justify-between mb-4">
           <div className="relative h-12 w-32">
             <Image
-              className="object-cover w-full h-full rounded-lg"
               src="https://images.unsplash.com/photo-1542690969-5a2050285637?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTF8fHxlbnwwfHx8fHw%3D"
               alt="Generic Partner Logo"
+              className="object-cover rounded-md"
               fill
-               class="mask-radial-at-center mask-radial-from-100% bg-[url(/img/mountains.jpg)] ..."
             />
           </div>
 

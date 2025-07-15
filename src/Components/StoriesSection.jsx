@@ -91,12 +91,15 @@ export default function StoriesPage() {
 
   return (
     <div className="min-h-screen">
+     
+
+     
       {featuredStory && (
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <Badge className="text-amber-800 text-7xl mb-2">Featured Story</Badge>
-              <h2 className="text-5xl text-black font-bold">The Bees' World</h2>
+              <Badge className="text-amber-800 text-6xl mb-2">Featured Story</Badge>
+              <h2 className="text-4xl text-black font-bold">Latest Insights</h2>
             </div>
             <Card className="overflow-hidden max-w-4xl mx-auto hover:shadow-xl transition-shadow">
               <div className="grid lg:grid-cols-2 gap-0">
@@ -129,11 +132,11 @@ export default function StoriesPage() {
         </section>
       )}
 
-      {/* All Stories */}
+   
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl text-black font-bold mb-4">All Stories</h2>
+            <h2 className="text-4xl text-black font-bold mb-4">All Stories</h2>
             <p className="text-lg text-gray-600">
               Explore our collection of educational content about bees, sustainability, and beekeeping
             </p>

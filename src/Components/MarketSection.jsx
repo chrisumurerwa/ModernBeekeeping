@@ -151,7 +151,6 @@ export default function MarketsPage() {
         </div>
       </section>
 
-      {/* Distribution Network */}
       <section className="py-20 bg-gradient-to-b from-green-50 to-amber-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">

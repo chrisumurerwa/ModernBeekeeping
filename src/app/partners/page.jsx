@@ -302,6 +302,7 @@ export default function PartnersPage() {
         </div>
       </section>
      
+      <MarketsPage/>
     </div>
   );
 }

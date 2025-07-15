@@ -51,13 +51,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products" className="text-gray-300 hover:text-amber-400 transition-colors">
+                <Link href="/product" className="text-gray-300 hover:text-amber-400 transition-colors">
                   Our Products
-                </Link>
-              </li>
-              <li>
-                <Link href="/stories" className="text-gray-300 hover:text-amber-400 transition-colors">
-                  Stories
                 </Link>
               </li>
               <li>
@@ -65,21 +60,13 @@ export default function Footer() {
                   Partners
                 </Link>
               </li>
-              <li>
-                <Link href="/markets" className="text-gray-300 hover:text-amber-400 transition-colors">
-                  Markets
-                </Link>
-              </li>
+           
               <li>
                 <Link href="/contact" className="text-gray-300 hover:text-amber-400 transition-colors">
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="/faq" className="text-gray-300 hover:text-amber-400 transition-colors">
-                  FAQ
-                </Link>
-              </li>
+             
             </ul>
           </div>
 
@@ -131,8 +118,8 @@ export default function Footer() {
               <Link href="#" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
                 Terms of Service
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
-                Cookie Policy
+              <Link href="/login" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
+                Login
               </Link>
             </div>
           </div>

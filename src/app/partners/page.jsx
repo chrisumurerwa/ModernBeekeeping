@@ -2,7 +2,8 @@ import Image from "next/image";
 import { Button } from "../../Components/ui/button";
 import { Card, CardContent } from "../../Components/ui/card";
 import { Badge } from "../../Components/ui/badge";
-import { Star, Quote } from "lucide-react";
+import { Star, Quote, Component } from "lucide-react";
+import MarketsPage from "../../Components/MarketSection"
 import { type } from "os";
 
 export default function PartnersPage() {
@@ -29,9 +30,34 @@ export default function PartnersPage() {
         type: "Hotel",
       },
     ],
-  
+    retail: [
+      {
+        name: "Whole Foods Market",
+        location: "North America",
+        logo: "/placeholder.svg?height=100&width=200",
+        type: "Organic Retailer",
+        testimonial:
+          "Their organic certification and quality standards exceed our requirements.",
+      },
+      {
+        name: "Harrods",
+        location: "London, UK",
+        logo: "/placeholder.svg?height=100&width=200",
+        type: "Luxury Department Store",
+        testimonial:
+          "A premium product that our discerning customers seek out specifically.",
+      },
+      {
+        name: "Dean & DeLuca",
+        location: "International",
+        logo: "/placeholder.svg?height=100&width=200",
+        type: "Gourmet Food",
+        testimonial:
+          "The perfect addition to our curated selection of artisanal foods.",
+      },
+    ],
   };
-
+<MarketsPage/>
   const PartnerCard = ({ partner, category }) => (
     <Card className="hover:shadow-xl transition-shadow">
       <CardContent className="p-6">
@@ -144,9 +170,12 @@ export default function PartnersPage() {
             >
               Download Catalog
             </Button>
+           
           </div>
         </div>
       </section>
+     
+      <MarketsPage/>
     </div>
   );
 }

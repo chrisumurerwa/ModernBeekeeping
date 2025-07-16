@@ -1,6 +1,6 @@
 import AddProduct from "../../Components/AddProduct";
 
-export default Product=()=>
+export default function Product()
     {
 return (
     <main>

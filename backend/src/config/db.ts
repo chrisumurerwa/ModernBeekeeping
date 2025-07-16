@@ -2,6 +2,8 @@ import { DataSource } from "typeorm";
 import { User } from "../entity/userEntity";
 import { Token } from "../entity/Token";
 import { Product } from "../entity/productEntity";
+
+import { Contact } from "../entity/contact2";
 import * as dotenv from "dotenv";
 dotenv.config();
 export const AppDataSource=new DataSource(
@@ -14,7 +16,7 @@ host:process.env.DB_HOST,
  database: process.env.DB_NAME,
  synchronize: true,
  logging: ["error"],
- entities: [User,Token,Product],
+ entities: [User,Token,Product,Contact],
  migrations: [],
  subscribers: [],
 })

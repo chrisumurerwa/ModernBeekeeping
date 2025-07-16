@@ -112,10 +112,10 @@ export default function Footer() {
               © 2025 Modern Beekeeping Company. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="#" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
+              <Link href="/privacy" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
                 Privacy Policy
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
+              <Link href="/terms" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">
                 Terms of Service
               </Link>
               <Link href="/login" className="text-gray-400 hover:text-amber-400 text-sm transition-colors">

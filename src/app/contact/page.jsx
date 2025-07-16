@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import Image from "next/image";
 import { Button } from "../../Components/ui/button";
 import { Card, CardContent } from "../../Components/ui/card";
@@ -14,8 +14,16 @@ import {
   SelectValue,
 } from "../../Components/ui/select";
 import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
-
+import { Notify } from "notiflix";
+import ContactListPage from "../../Components/contactListPage"
 export default function ContactPage() {
+const [user,setUser]=useState(null)
+ useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,24 +41,45 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission here
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleWhatsApp = () => {
-    const message = "Hello! I'm interested in your honey products.";
-    const phoneNumber = "250788123456";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(whatsappUrl, "_blank");
-  };
+  try {
+    const res = await fetch("http://localhost:4000/contact/postContact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      Notify.success(data.message);
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+    } else {
+      Notify.failure(data.message || "Something went wrong");
+    }
+  } catch (error) {
+    console.error("Failed to send contact:", error);
+    alert("Error submitting the form. Please try again.");
+  }
+};
+
+ 
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {user?(<ContactListPage/>):(
+        <div>
       <section className="relative h-64 flex items-center justify-center bg-gradient-to-r bg-amber-600">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4 ">Contact Us</h1>
@@ -224,46 +253,6 @@ export default function ContactPage() {
                     </div>
                   </CardContent>
                 </Card>
-
-                <Card className="border-none shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start">
-                      <Clock className="w-6 h-6 text-amber-600 mr-4 mt-1" />
-                      <div>
-                        <h3 className="font-bold mb-2 text-black">Business Hours</h3>
-                        <p className="text-gray-600">
-                          Monday - Friday: 8:00 AM - 6:00 PM (EAT)
-                          <br />
-                          Saturday: 9:00 AM - 2:00 PM (EAT)
-                          <br />
-                          Sunday: Closed
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-none shadow-lg bg-green-50">
-                  <CardContent className="p-6">
-                    <div className="flex items-start">
-                      <MessageSquare className="w-6 h-6 text-green-600 mr-4 mt-1" />
-                      <div>
-                        <h3 className="font-bold mb-2 text-green-800">
-                          WhatsApp Business
-                        </h3>
-                        <p className="text-green-700 mb-3">
-                          For quick inquiries and orders
-                        </p>
-                        <Button
-                          onClick={handleWhatsApp}
-                          className="bg-green-600 hover:bg-green-700"
-                        >
-                          Chat on WhatsApp
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
               </div>
             </div>
           </div>
@@ -355,6 +344,9 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
+      </div>
+      )}
+     
     </div>
   );
 }

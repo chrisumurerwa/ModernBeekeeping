@@ -31,7 +31,6 @@ export default function Page() {
     return () => clearInterval(interval);
   }, []);
 
-  //product staff
   const products = {
     honey: [
       {

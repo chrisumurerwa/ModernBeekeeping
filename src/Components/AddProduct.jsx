@@ -1,7 +1,10 @@
+"use client"
 import { useState } from "react";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
+import jwt_decode from "jwt-decode";
 export default function AddProduct() {
+  const router=useRouter();
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -24,6 +27,10 @@ export default function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+       const token = localStorage.getItem("token"); 
+       const decoded = jwt_decode(token);
+       console.log(decoded);
+
       const data = new FormData();
       data.append("name", form.name);
       data.append("description", form.description);
@@ -34,6 +41,7 @@ export default function AddProduct() {
       const res = await axios.post("http://localhost:4000/product/addProduct", data, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -46,6 +54,7 @@ export default function AddProduct() {
           price: "",
           imageUrl: null,
         });
+        router.push("/product");
       } else {
         setMessage("Failed to add product");
       }
@@ -56,7 +65,7 @@ export default function AddProduct() {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-xl shadow-md mt-10">
+    <div className="max-w-md mb-10 mx-auto bg-white p-6 rounded-xl shadow-md mt-10">
       <h2 className="text-2xl font-semibold mb-6 text-black">Add Product</h2>
 
       <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-4">
@@ -101,13 +110,13 @@ export default function AddProduct() {
 
         <input
           type="file"
-          name="image"
+          name="imageUrl"
           accept="image/*"
           onChange={handleChange}
           required
           className="w-full p-2 border border-gray-300 rounded bg-white text-black"
         />
-
+     
         <button
           type="submit"
           className="w-full bg-[#7B3F00] hover:bg-[#5f2f00] text-white p-2 rounded transition"

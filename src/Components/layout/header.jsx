@@ -4,23 +4,34 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Menu, ShoppingCart, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useUser } from "../../context/userContext";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const router=useRouter()
+  //const [user, setUser] = useState(null);
+  const { user, logout } = useUser();
+
      const [isDropdownOpen,setIsDropdownOpen] = useState(false); 
     const toggleDropdown=()=>
     {
       setIsDropdownOpen(!isDropdownOpen);
     }
 
-    const HandleLogout=()=>
-    {
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      localStorage.removeItem("userName")
-      localStorage.removeItem("userId")
-    }
+//    const HandleLogout = () => {
+//   localStorage.removeItem("token");
+//   localStorage.removeItem("user");
+//   localStorage.removeItem("userName");
+//   localStorage.removeItem("userId");
+//   setUser(null); 
+//   router.push("/");
+// };
+const HandleLogout = () => {
+  logout();
+  router.push("/");
+};
+
   const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
@@ -28,12 +39,12 @@ export default function Header() {
     { name: "Partners", href: "/partners" },
     { name: "Contact", href: "/contact" },
   ];
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //   }
+  // }, []);
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
       <div className="container mx-auto px-4">
@@ -82,7 +93,7 @@ export default function Header() {
     <ul className="py-2">
       <li
         onClick={HandleLogout}
-        className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-red-600"
+        className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-amber-700"
       >
         Logout
       </li>

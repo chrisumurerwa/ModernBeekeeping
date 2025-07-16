@@ -17,6 +17,8 @@ export const createproduct = async (
     {
       return next(new BadRequestError("Image file is required"))
     }
+      console.log("REQ.BODY:", req.body);
+    console.log("REQ.FILE:", req.file);
 
     const filePath=path.resolve(req.file.path);
     const result=await cloudinary.uploader.upload(

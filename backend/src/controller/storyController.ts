@@ -11,7 +11,7 @@ export const createStory = async (req: Request, res: Response) => {
 
   const story = await service.createStory({
     title,
-    content,
+    content, 
     author,
     tags: tags ? tags.split(",") : [],
     coverImage,

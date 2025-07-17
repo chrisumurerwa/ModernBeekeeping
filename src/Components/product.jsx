@@ -134,7 +134,7 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-700">
+      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-300 to-amber-300">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Our Products</h1>
           <p className="text-xl">Premium honey and bee products from nature's finest</p>

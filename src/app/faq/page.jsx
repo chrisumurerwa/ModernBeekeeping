@@ -119,7 +119,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-700">
+      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-300 to-amber-700">
         <div className="text-center text-white">
           <HelpCircle className="w-16 h-16 mx-auto mb-4" />
           <h1 className="text-5xl font-bold mb-4">

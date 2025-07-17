@@ -43,10 +43,9 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="min-h-[150vh]"> {/* 150% of the viewport height */}
+    <div className="min-h-[150vh]"> 
 
-      {/* Hero Section with Video Background */}
-      <section className="relative h-150 flex items-center justify-center overflow-hidden">
+      <section className="relative h-90 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10" />
         <video
           autoPlay
@@ -62,12 +61,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Company History */}
+     
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl font-bold mb-6" style={{ color: "#064e3b" }}>
+              <h2 className="text-4xl font-bold mb-6 text-amber-300">
                 History of Our Company
               </h2>
               <div className="space-y-4 md:space-y-6 text-base md:text-lg text-gray-700">
@@ -111,17 +110,17 @@ export default function AboutPage() {
           <h2 className="text-4xl font-bold mb-12 text-center" style={{ color: '#064e3b' }}>Our Vision & Mission</h2>
           <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 max-w-4xl mx-auto">
             {/* Vision Card */}
-            <div className="flex-1 bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border-t-4 border-amber-400">
-              <svg className="w-12 h-12 mb-4 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-              <h3 className="text-2xl font-bold mb-3 text-amber-700">Vision</h3>
+            <div className="flex-1 bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border-t-4 border-amber-300">
+              <svg className="w-12 h-12 mb-4 text-amber-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              <h3 className="text-2xl font-bold mb-3 text-amber-300">Vision</h3>
               <p className="text-gray-700 text-base text-center">
                 Our vision is to create a world where sustainable beekeeping becomes a powerful tool for change—empowering communities with new opportunities, preserving traditional knowledge, and protecting the planet's biodiversity. We dream of a future where every drop of honey represents not just purity and quality, but also a commitment to nature, culture, and human well-being. From rural villages to urban markets, we believe beekeeping can inspire a more connected, sustainable, and healthy world.
               </p>
             </div>
             {/* Mission Card */}
-            <div className="flex-1 bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border-t-4 border-amber-400">
-              <svg className="w-12 h-12 mb-4 text-amber-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 19.5V4.5m0 0L7.5 9m4.5-4.5L16.5 9" /></svg>
-              <h3 className="text-2xl font-bold mb-3 text-amber-700">Mission</h3>
+            <div className="flex-1 bg-white rounded-2xl shadow-lg p-8 flex flex-col items-center border-t-4 border-amber-300">
+              <svg className="w-12 h-12 mb-4 text-amber-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 19.5V4.5m0 0L7.5 9m4.5-4.5L16.5 9" /></svg>
+              <h3 className="text-2xl font-bold mb-3 text-amber-300">Mission</h3>
               <p className="text-gray-700 text-base text-center">
                 We are committed to beekeeping in a fair and careful way. We want to produce good honey and help local farmers live better lives. By teaching people, working with communities, and using new ideas, we want to support rural areas, protect nature, and take care of the environment. Our goal is to grow a strong beekeeping culture that helps people, bees, and the earth.
               </p>
@@ -146,7 +145,7 @@ export default function AboutPage() {
           key={idx}
           className="bg-white rounded-xl shadow-lg p-4 flex flex-col items-center transition-all duration-300 hover:scale-105 hover:shadow-xl border border-amber-100"
         >
-          <div className="w-24 h-24 mb-3 relative rounded-full overflow-hidden border-3 border-amber-400 shadow-md">
+          <div className="w-24 h-24 mb-3 relative rounded-full overflow-hidden border-3 border-amber-300 shadow-md">
             <Image
               src={member.image}
               alt={member.name}
@@ -156,7 +155,7 @@ export default function AboutPage() {
             />
           </div>
           <h3 className="text-lg font-bold mb-1 text-center" style={{ color: '#064e3b' }}>{member.name}</h3>
-          <p className="text-amber-700 font-semibold mb-2 text-center text-sm">{member.role}</p>
+          <p className="text-amber-300 font-semibold mb-2 text-center text-sm">{member.role}</p>
           <p className="text-gray-700 text-center mb-3 text-xs leading-relaxed">{member.bio}</p>
           
           {/* Contact Section with Copy Email on Click */}
@@ -167,8 +166,8 @@ export default function AboutPage() {
               alert(`Copied ${member.email} to clipboard!`);
             }}
           >
-            <Mail className="w-4 h-4 mr-2 text-amber-600 group-hover:text-amber-800 transition-colors" />
-            <span className="text-amber-600 group-hover:text-amber-800 text-xs font-medium transition-colors">
+            <Mail className="w-4 h-4 mr-2 text-amber-300 group-hover:text-amber-800 transition-colors" />
+            <span className="text-amber-300 group-hover:text-amber-800 text-xs font-medium transition-colors">
               {member.email}
             </span>
           </div>

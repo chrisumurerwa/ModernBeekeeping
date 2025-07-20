@@ -1,27 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/Components/ui/button";
-import { Card, CardContent } from "@/Components/ui/card";
-import { Badge } from "@/Components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
-import { ShoppingCart } from "lucide-react";
-import { useCart } from "../context/CartContext";
-import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {Notify} from "notiflix";
-import { Delete,PencilIcon} from "lucide-react";
+import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "@/Components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { ShoppingCart, Delete } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { Notify } from "notiflix";
 
 export default function ProductsPage() {
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
   const [user, setUser] = useState(null);
-  const [products, setProducts] = useState({
-    honey: [],
-    wax: [],
-    supplements: [],
-  });
+  const [productsByCategory, setProductsByCategory] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadingProductId, setLoadingProductId] = useState(null);
+  const [addedProductId, setAddedProductId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -33,18 +29,23 @@ export default function ProductsPage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:4000/product/getAllProduct"); // replace with your real API endpoint
+        const res = await fetch("http://localhost:4000/product/getAllProduct");
         const data = await res.json();
-
         if (data.success) {
-          // separate products by category
-          const honey = data.data.filter((p) => p.category === "honey");
-          const wax = data.data.filter((p) => p.category === "wax");
-          const supplements = data.data.filter((p) => p.category === "supplements");
+          // Group products by normalized category (lowercase)
+          const grouped = {};
+          data.data.forEach((product) => {
+            const category = product.category?.toLowerCase() || "other";
+            if (!grouped[category]) {
+              grouped[category] = [];
+            }
+            grouped[category].push(product);
+          });
+          setProductsByCategory(grouped);
 
-          setProducts({ honey, wax, supplements });
-        } else {
-          console.error("Failed to fetch products:", data.message);
+          // Select first category by default
+          const firstCategory = Object.keys(grouped)[0];
+          setSelectedCategory(firstCategory || "");
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -52,228 +53,170 @@ export default function ProductsPage() {
         setLoading(false);
       }
     }
-
     fetchProducts();
   }, []);
 
   const handleDelete = async (productId) => {
-  const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-  if (!confirmDelete) return;
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
 
-  try {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`http://localhost:4000/product/deleteProduct/${productId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      // Remove from UI
-      setProducts((prev) => {
-        const newState = { ...prev };
-        for (const key in newState) {
-          newState[key] = newState[key].filter((p) => p.id !== productId);
-        }
-        return newState;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:4000/product/deleteProduct/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      Notify.success("Product deleted successfully!");
-    } else {
-      Notify.failure("Failed to delete product");
-    }
-  } catch (error) {
-    console.error("Delete error:", error);
-    Notify.failure("Something went wrong while deleting");
-  }
-};
+      const data = await res.json();
 
- 
+      if (data.success) {
+        setProductsByCategory((prev) => {
+          const updated = { ...prev };
+          for (const cat in updated) {
+            updated[cat] = updated[cat].filter((p) => p.id !== productId);
+          }
+          return updated;
+        });
+        Notify.success("Product deleted successfully!");
+      } else {
+        Notify.failure("Failed to delete product");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      Notify.failure("Something went wrong while deleting");
+    }
+  };
+
+  const ProductCard = ({ product }) => {
+    const alreadyInCart = cart.some((item) => item.id === product.id);
+
+    const handleAddToCart = () => {
+      if (alreadyInCart) return;
+      setLoadingProductId(product.id);
+      setTimeout(() => {
+        addToCart(product);
+        setLoadingProductId(null);
+        setAddedProductId(product.id);
+        Notify.success("Product added to cart");
+      }, 1000);
+    };
+
+    return (
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
+        <div className="relative h-64 overflow-hidden">
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority
+          />
+        </div>
+        <CardContent className="p-6">
+          <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
+          <p className="text-gray-600 mb-4">{product.description}</p>
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-amber-600">${product.price}</span>
+
+            {user ? (
+              <Button
+                className="bg-amber-600 text-white hover:bg-amber-700"
+                onClick={() => handleDelete(product.id)}
+              >
+                <Delete className="w-4 h-4 mr-2" /> Delete
+              </Button>
+            ) : (
+              <Button
+                disabled={alreadyInCart || loadingProductId === product.id}
+                onClick={handleAddToCart}
+                className={`flex items-center gap-2 ${
+                  alreadyInCart ? "bg-amber-600 cursor-not-allowed" : "bg-amber-600 hover:bg-amber-700"
+                } text-white px-4 py-2 rounded-md transition-all duration-300`}
+              >
+                {loadingProductId === product.id ? (
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                ) : alreadyInCart ? (
+                  "In Cart"
+                ) : addedProductId === product.id ? (
+                  "Added ✓"
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4" />
+                    Add to Cart
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
   if (loading) return <p className="text-center mt-10">Loading products...</p>;
 
-  const ProductCard = ({ product }) => (
-    <>
-    {user?(  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
-      <div className="relative h-64 overflow-hidden">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          priority
-        />
-      </div>
-      <CardContent className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
-        <p className="text-gray-600 mb-4">{product.description}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-amber-600">${product.price}</span>
-          <Button
-            className="bg-amber-600 text-white hover:bg-amber-700"
-           onClick={() => handleDelete(product.id)}
-          >
-            <Delete className="w-4 h-4 mr-2" />
-            Delete
-          </Button>
-          {/* <Button
-            className="bg-amber-600 text-white hover:bg-amber-700"
-            onClick={() => {
-             Notify.success("Product deleted successfully")
-            }}
-          >
-            <PencilIcon className="w-4 h-4 mr-2" />
-            Update
-          </Button> */}
-        </div>
-      </CardContent>
-    </Card>
-    ):(
-      <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
-      <div className="relative h-64 overflow-hidden">
-        <Image
-          src={product.imageUrl}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          priority
-        />
-      </div>
-      <CardContent className="p-6">
-        <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
-        <p className="text-gray-600 mb-4">{product.description}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-amber-600">${product.price}</span>
-          <Button
-            className="bg-amber-600 text-white hover:bg-amber-700"
-            onClick={() => {
-              addToCart(product);
-             Notify.success("Product Added  to Cart")
-            }}
-          >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Add to Cart
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-    )}
-    </>
-  );
+  const categories = Object.keys(productsByCategory);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      {user ? (
-        <section className="bg-amber-700 text-white relative h-40 flex items-center justify-center cols gap-30">
-          <div className="text-center p-10">
-            <h1 className="text-5xl font-bold mb-4">Our Products</h1>
-            <p className="text-xl">Premium honey and bee products from nature's finest</p>
-          </div>
+      <section
+        className={`${
+          user ? "bg-amber-700" : "bg-gradient-to-r from-amber-600 to-amber-700"
+        } text-white relative h-40 flex items-center justify-center gap-10`}
+      >
+        <div className="text-center p-10">
+          <h1 className="text-5xl font-bold mb-4">Our Products</h1>
+          <p className="text-xl">Premium honey and bee products from nature's finest</p>
+        </div>
+        {user && (
           <Link href="/addProduct">
             <Button className="bg-white text-amber-700 hover:bg-gray-50">Add Product</Button>
           </Link>
-        </section>
-      ) : (
-        <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-700">
-          <div className="text-center text-white">
-            <h1 className="text-5xl font-bold mb-4">Our Products</h1>
-            <p className="text-xl">Premium honey and bee products from nature's finest</p>
-          </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* Products Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="honey" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12 text-black">
-              <TabsTrigger value="honey" className="text-lg">
-                Honey Products
-              </TabsTrigger>
-              <TabsTrigger value="wax" className="text-lg">
-                Beeswax Products
-              </TabsTrigger>
-              <TabsTrigger value="supplements" className="text-lg">
-                Health Supplements
-              </TabsTrigger>
-            </TabsList>
+          {categories.length === 0 ? (
+            <p className="text-center text-xl text-gray-500">No products available yet.</p>
+          ) : (
+            <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+              <TabsList className="grid w-full grid-cols-3 mb-12 text-black">
+                {categories.map((category) => (
+                  <TabsTrigger key={category} value={category} className="capitalize text-lg">
+                    {category}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
 
-            <TabsContent value="honey">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Premium Honey Collection</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Our honey is harvested with care, maintaining all natural enzymes and nutrients that make each variety unique and beneficial.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.honey.length === 0 ? (
-                  <p className="text-center col-span-full">No honey products found.</p>
-                ) : (
-                  products.honey.map((product) => <ProductCard key={product.id} product={product} />)
-                )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="wax">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Pure Beeswax Products</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Our beeswax is carefully filtered and processed to maintain its natural properties, perfect for crafting, cosmetics, and home use.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.wax.length === 0 ? (
-                  <p className="text-center col-span-full">No beeswax products found.</p>
-                ) : (
-                  products.wax.map((product) => <ProductCard key={product.id} product={product} />)
-                )}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="supplements">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Natural Health Supplements</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Harness the power of the hive with our range of natural supplements, each packed with unique nutrients and health benefits.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.supplements.length === 0 ? (
-                  <p className="text-center col-span-full">No supplements found.</p>
-                ) : (
-                  products.supplements.map((product) => <ProductCard key={product.id} product={product} />)
-                )}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Quality Assurance */}
-      <section className="py-20 bg-gradient-to-r from-green-50 to-amber-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8 text-black">Quality You Can Trust</h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            {[
-              { icon: "✓", title: "Organic Certified", desc: "All products meet strict organic standards" },
-              { icon: "★", title: "Premium Quality", desc: "Rigorous testing ensures the highest quality" },
-              { icon: "♻", title: "Sustainable", desc: "Environmentally responsible production" },
-              { icon: "❤", title: "Fair Trade", desc: "Supporting local beekeeping communities" },
-            ].map(({ icon, title, desc }) => (
-              <div key={title}>
-                <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white font-bold text-xl">{icon}</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2 text-black">{title}</h3>
-                <p className="text-gray-600">{desc}</p>
-              </div>
-            ))}
-          </div>
+              {categories.map((category) => (
+                <TabsContent key={category} value={category}>
+                  <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold mb-4 text-black capitalize">
+                      {category} Products
+                    </h2>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                      Browse our selection of premium {category} products.
+                    </p>
+                  </div>
+                  {productsByCategory[category].length === 0 ? (
+                    <p className="text-center text-gray-500">No products found.</p>
+                  ) : (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {productsByCategory[category].map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
+              ))}
+            </Tabs>
+          )}
         </div>
       </section>
     </div>

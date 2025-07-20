@@ -151,41 +151,6 @@ export default function MarketsPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-b from-green-50 to-amber-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl text-amber-800 font-bold mb-4">Distribution Network</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Our sophisticated logistics network ensures fresh, high-quality products reach customers quickly and
-              efficiently worldwide.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center border-none shadow-lg">
-              <CardContent className="p-8">
-                <Globe className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                <h3 className="text-xl text-black font-bold mb-2">Air Freight</h3>
-                <p className="text-gray-600">Fast delivery to international markets within 48-72 hours</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center border-none shadow-lg">
-              <CardContent className="p-8">
-                <MapPin className="w-12 h-12 text-green-600 mx-auto mb-4" />
-                <h3 className="text-xl text-black font-bold mb-2">Regional Hubs</h3>
-                <p className="text-gray-600">Strategic distribution centers for efficient local delivery</p>
-              </CardContent>
-            </Card>
-            <Card className="text-center border-none shadow-lg">
-              <CardContent className="p-8">
-                <Phone className="w-12 h-12 text-amber-600 mx-auto mb-4" />
-                <h3 className="text-xl text-black font-bold mb-2">Local Support</h3>
-                <p className="text-gray-600">Dedicated customer service teams in each region</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
     
     </div>
   )

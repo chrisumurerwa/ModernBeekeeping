@@ -1,10 +1,11 @@
-"use client"
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import jwt_decode from "jwt-decode";
+
 export default function AddProduct() {
-  const router=useRouter();
+  const router = useRouter();
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -14,11 +15,41 @@ export default function AddProduct() {
   });
 
   const [message, setMessage] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [isCustomCategory, setIsCustomCategory] = useState(false);
+  const [loading, setLoading] = useState(false); // ← loading state
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get("http://localhost:4000/product/getAllProduct");
+        if (res.data.success) {
+          const uniqueCategories = [
+            ...new Set(res.data.data.map((p) => p.category.toLowerCase())),
+          ];
+          setCategories(uniqueCategories);
+        }
+      } catch (err) {
+        console.error("Error fetching categories", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === "imageUrl") {
       setForm({ ...form, imageUrl: files[0] });
+    } else if (name === "categorySelect") {
+      if (value === "custom") {
+        setIsCustomCategory(true);
+        setForm({ ...form, category: "" });
+      } else {
+        setIsCustomCategory(false);
+        setForm({ ...form, category: value });
+      }
     } else {
       setForm({ ...form, [name]: value });
     }
@@ -26,10 +57,12 @@ export default function AddProduct() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // start loading
+    setMessage("");
+
     try {
-       const token = localStorage.getItem("token"); 
-       const decoded = jwt_decode(token);
-       console.log(decoded);
+      const token = localStorage.getItem("token");
+      const decoded = jwt_decode(token);
 
       const data = new FormData();
       data.append("name", form.name);
@@ -46,7 +79,7 @@ export default function AddProduct() {
       });
 
       if (res.data.success) {
-        setMessage("Product added successfully!");
+        setMessage("✅ Product added successfully!");
         setForm({
           name: "",
           description: "",
@@ -54,13 +87,16 @@ export default function AddProduct() {
           price: "",
           imageUrl: null,
         });
+        setIsCustomCategory(false);
         router.push("/product");
       } else {
-        setMessage("Failed to add product");
+        setMessage("❌ Failed to add product");
       }
     } catch (err) {
       console.error(err);
-      setMessage("Server error");
+      setMessage("🚫 Server error");
+    } finally {
+      setLoading(false); // stop loading
     }
   };
 
@@ -88,15 +124,38 @@ export default function AddProduct() {
           className="w-full p-2 border border-gray-300 rounded text-black"
         />
 
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={form.category}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border border-gray-300 rounded text-black"
-        />
+        {/* Category Select or Custom */}
+        <div>
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+            Category
+          </label>
+          <select
+            name="categorySelect"
+            value={isCustomCategory ? "custom" : form.category}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded mb-2 text-black"
+          >
+            <option value="">-- Select Category --</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+              </option>
+            ))}
+            <option value="custom">Other (write your own)</option>
+          </select>
+
+          {isCustomCategory && (
+            <input
+              type="text"
+              name="category"
+              placeholder="Enter custom category"
+              value={form.category}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            />
+          )}
+        </div>
 
         <input
           type="number"
@@ -116,12 +175,15 @@ export default function AddProduct() {
           required
           className="w-full p-2 border border-gray-300 rounded bg-white text-black"
         />
-     
+
         <button
           type="submit"
-          className="w-full bg-[#7B3F00] hover:bg-[#5f2f00] text-white p-2 rounded transition"
+          disabled={loading}
+          className={`w-full text-white p-2 rounded transition ${
+            loading ? "bg-amber-400 cursor-not-allowed" : "bg-[#E17100] hover:bg-[#f87400bf]"
+          }`}
         >
-          Add Product
+          {loading ? "Adding Product..." : "Add Product"}
         </button>
       </form>
 

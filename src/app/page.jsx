@@ -25,7 +25,7 @@ export default function Page() {
      const images = [
     "/images/bees11.jpg",
     "/images/bees9.jpg",
-    "/images/beehive.jpg",
+    "/images/jar.jpg",
   ];
 
   const [currentImage, setCurrentImage] = useState(0);

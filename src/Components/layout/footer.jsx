@@ -13,7 +13,7 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-amber-300 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold text-lg">🐝</span>
               </div>
               <div>
@@ -99,7 +99,7 @@ export default function Footer() {
               <Input type="email" placeholder="Your email" className="bg-gray-800 border-gray-700 text-white" />
               <Button  
                suppressHydrationWarning={true} 
-               className="bg-amber-600 hover:bg-amber-700">
+               className="bg-amber-300 hover:bg-amber-700">
                 Subscribe</Button>
             </div>
           </div>

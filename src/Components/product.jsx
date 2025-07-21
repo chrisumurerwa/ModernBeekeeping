@@ -169,6 +169,7 @@ export default function ProductsPage() {
         } text-white relative h-40 flex items-center justify-center gap-10`}
       >
         <div className="text-center p-10">
+
           <h1 className="text-5xl font-bold mb-4">Our Products</h1>
           <p className="text-xl">Premium honey and bee products from nature's finest</p>
         </div>

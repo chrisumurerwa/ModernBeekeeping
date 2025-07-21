@@ -1,3 +1,4 @@
+
 import { Request, Response, NextFunction, RequestHandler } from "express";
 import { AppDataSource } from "../config/db";
 import { Contact } from "../entity/contact2";
@@ -39,8 +40,8 @@ export const postContact = asyncWrapper(async (
     data: savedContact,
   });
 }) as RequestHandler;
-
 // GET /contact
+
 export const getAllContacts = asyncWrapper(async (
   req: Request,
   res: Response<ApiResponse>,

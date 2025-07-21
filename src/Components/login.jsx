@@ -18,7 +18,7 @@ export default function LoginPage() {
 
     try {
       const res = await axios.post(
-        "http://localhost:4000/user/signin",
+        "http://localhost:5000/api/login/signin",
         { email, password }
       );
 
@@ -87,12 +87,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {/* <p className="text-center text-sm text-gray-600 mt-4">
-          Don’t have an account?{" "}
-          <a href="/register" className="text-[#FE4801] font-medium hover:underline">
-            Register
-          </a>
-        </p> */}
+      
       </div>
     </div>
   );

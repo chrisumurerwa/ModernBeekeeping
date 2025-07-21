@@ -10,6 +10,7 @@ export default function PartnersPage() {
     hotels: [
       {
         name: "Four Seasons",
+
         email: "fourseasons@gmail.com",
         logo: "honey-logo-design.jpg", // Make sure this is in public/
         type: "Restaurant",
@@ -47,8 +48,10 @@ export default function PartnersPage() {
         <p className="text-gray-600">{partner.email}</p>
       </CardContent>
     </Card>
-  );
 
+  );
+  
+  
   return (
     <div className="min-h-screen">
    
@@ -73,7 +76,9 @@ export default function PartnersPage() {
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4 text-black">
           <div className="text-center mb-16">
+
             <h2 className="text-5xl font-bold mb-4 text-amber-800">
+
               Our Partners
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -81,11 +86,13 @@ export default function PartnersPage() {
               their breakfast services, spa treatments, and exclusive amenities.
             </p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-8">
             {partners.hotels.map((partner, index) => (
               <PartnerCard key={index} partner={partner} />
             ))}
           </div>
+
         </div>
       </section>
 

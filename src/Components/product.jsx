@@ -1,247 +1,225 @@
-"use client"
-import Image from "next/image"
-import { Button } from "@/Components/ui/button"
-import { Card, CardContent } from "@/Components/ui/card"
-import { Badge } from "@/Components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs"
-import { Star, ShoppingCart } from "lucide-react"
-import { useCart } from "../context/CartContext"
-import { toast } from "sonner"
+"use client";
+
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Button } from "@/Components/ui/button";
+import { Card, CardContent } from "@/Components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { ShoppingCart, Delete } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { Notify } from "notiflix";
 
 export default function ProductsPage() {
-  const { addToCart } = useCart()
-  const products = {
-    honey: [
-      {
-        id: 1,
-        name: "Raw Wildflower Honey",
-        price: "$24.99",
-        image: "/Honey1.jpg",
-        description: "Pure, unprocessed honey with natural enzymes intact",
-        badges: ["Organic", "Raw"],
-        rating: 4.9,
-      },
-      {
-        id: 2,
-        name: "Acacia Honey",
-        price: "$28.99",
-        image: "/Honey2.jpg",
-        description: "Light, delicate honey with rich floral notes and a smooth, golden finish",
-        badges: ["Premium", "Limited"],
-        rating: 4.8,
-      },
-      {
-        id: 3,
-        name: "Manuka Honey",
-        price: "$89.99",
-        image: "/Honey3.jpg",
-        description: "Therapeutic honey with unique healing properties",
-        badges: ["Medical Grade", "UMF 15+"],
-        rating: 5.0,
-      },
-    ],
-    wax: [
-      {
-        id: 4,
-        name: "Pure Beeswax Blocks",
-        price: 15.99,
-        image: "/Honey5.jpg",
-        description: "100% pure beeswax for crafting and cosmetics",
-        badges: ["Pure", "Filtered"],
-        rating: 4.7,
-      },
-      {
-        id: 5,
-        name: "Beeswax Candles Set",
-        price: 32.99,
-        image: "/Honey6.jpg",
-        description: "Hand-dipped candles that burn clean and long",
-        badges: ["Handmade", "Set of 6"],
-        rating: 4.9,
-      },
-    ],
-    supplements: [
-      {
-        id: 6,
-        name: "Fresh Royal Jelly",
-        price: 89.99,
-        image: "/Honey7.jpg",
-        description: "Nature's superfood packed with nutrients",
-        badges: ["Fresh", "Premium"],
-        rating: 4.8,
-      },
-      {
-        id: 7,
-        name: "Bee Pollen Granules",
-        price: 34.99,
-        image: "/Honey8.jpg",
-        description: "Pure bee pollen rich in proteins and vitamins",
-        badges: ["Organic", "Raw"],
-        rating: 4.6,
-      },
-      {
-        id: 8,
-        name: "Propolis Tincture",
-        price: 42.9,
-        image: "/Honey9.jpg",
-        description: "Natural immune system support",
-        badges: ["Concentrated", "Alcohol-Free"],
-        rating: 4.7,
-      },
-    ],
-  }
+  const { addToCart, cart } = useCart();
+  const [user, setUser] = useState(null);
+  const [productsByCategory, setProductsByCategory] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [loadingProductId, setLoadingProductId] = useState(null);
+  const [addedProductId, setAddedProductId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const ProductCard = ({ product }) => (
-    <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
-      <div className="relative h-64 overflow-hidden">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-          {product.badges.map((badge, index) => (
-            <Badge key={index} className="bg-amber-600 text-white">
-              {badge}
-            </Badge>
-          ))}
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch("http://localhost:4000/product/getAllProduct");
+        const data = await res.json();
+        if (data.success) {
+          // Group products by normalized category (lowercase)
+          const grouped = {};
+          data.data.forEach((product) => {
+            const category = product.category?.toLowerCase() || "other";
+            if (!grouped[category]) {
+              grouped[category] = [];
+            }
+            grouped[category].push(product);
+          });
+          setProductsByCategory(grouped);
+
+          // Select first category by default
+          const firstCategory = Object.keys(grouped)[0];
+          setSelectedCategory(firstCategory || "");
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
+  const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:4000/product/deleteProduct/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setProductsByCategory((prev) => {
+          const updated = { ...prev };
+          for (const cat in updated) {
+            updated[cat] = updated[cat].filter((p) => p.id !== productId);
+          }
+          return updated;
+        });
+        Notify.success("Product deleted successfully!");
+      } else {
+        Notify.failure("Failed to delete product");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      Notify.failure("Something went wrong while deleting");
+    }
+  };
+
+  const ProductCard = ({ product }) => {
+    const alreadyInCart = cart.some((item) => item.id === product.id);
+
+    const handleAddToCart = () => {
+      if (alreadyInCart) return;
+      setLoadingProductId(product.id);
+      setTimeout(() => {
+        addToCart(product);
+        setLoadingProductId(null);
+        setAddedProductId(product.id);
+        Notify.success("Product added to cart");
+      }, 1000);
+    };
+
+    return (
+      <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
+        <div className="relative h-64 overflow-hidden">
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            priority
+          />
         </div>
-      </div>
-      <CardContent className="p-6">
-        <div className="flex items-center mb-2">
-        </div>
-        <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
-        <p className="text-gray-600 mb-4">{product.description}</p>
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold text-amber-600">{product.price}</span>
-          <Button 
-            className="bg-amber-600 text-white hover:bg-amber-700" 
-            suppressHydrationWarning={true}
-            onClick={() => {
-              addToCart(product)
-              toast.success("Added to cart ")
-            }}
-          >
-            <ShoppingCart className="w-4 h-4 mr-2" />
-            Add to Cart
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  )
+        <CardContent className="p-6">
+          <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
+          <p className="text-gray-600 mb-4">{product.description}</p>
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold text-amber-600">${product.price}</span>
+
+            {user ? (
+              <Button
+                className="bg-amber-600 text-white hover:bg-amber-700"
+                onClick={() => handleDelete(product.id)}
+              >
+                <Delete className="w-4 h-4 mr-2" /> Delete
+              </Button>
+            ) : (
+              <Button
+                disabled={alreadyInCart || loadingProductId === product.id}
+                onClick={handleAddToCart}
+                className={`flex items-center gap-2 ${
+                  alreadyInCart ? "bg-amber-600 cursor-not-allowed" : "bg-amber-600 hover:bg-amber-700"
+                } text-white px-4 py-2 rounded-md transition-all duration-300`}
+              >
+                {loadingProductId === product.id ? (
+                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                ) : alreadyInCart ? (
+                  "In Cart"
+                ) : addedProductId === product.id ? (
+                  "Added ✓"
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4" />
+                    Add to Cart
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
+
+  if (loading) return <p className="text-center mt-10">Loading products...</p>;
+
+  const categories = Object.keys(productsByCategory);
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r from-amber-300 to-amber-300">
-        <div className="text-center text-white">
+      <section
+        className={`${
+          user ? "bg-amber-700" : "bg-gradient-to-r from-amber-600 to-amber-700"
+        } text-white relative h-40 flex items-center justify-center gap-10`}
+      >
+        <div className="text-center p-10">
+
           <h1 className="text-5xl font-bold mb-4">Our Products</h1>
           <p className="text-xl">Premium honey and bee products from nature's finest</p>
         </div>
+        {user && (
+          <Link href="/addProduct">
+            <Button className="bg-white text-amber-700 hover:bg-gray-50">Add Product</Button>
+          </Link>
+        )}
       </section>
 
       {/* Products Section */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <Tabs defaultValue="honey" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12 text-black ">
-              <TabsTrigger value="honey" className="text-lg">
-                Honey Products
-              </TabsTrigger>
-              <TabsTrigger value="wax" className="text-lg">
-                Beeswax Products
-              </TabsTrigger>
-              <TabsTrigger value="supplements" className="text-lg">
-                Health Supplements
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="honey">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Premium Honey Collection</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Our honey is harvested with care, maintaining all natural enzymes and nutrients that make each variety
-                  unique and beneficial.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.honey.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+          {categories.length === 0 ? (
+            <p className="text-center text-xl text-gray-500">No products available yet.</p>
+          ) : (
+            <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+              <TabsList className="grid w-full grid-cols-3 mb-12 text-black">
+                {categories.map((category) => (
+                  <TabsTrigger key={category} value={category} className="capitalize text-lg">
+                    {category}
+                  </TabsTrigger>
                 ))}
-              </div>
-            </TabsContent>
+              </TabsList>
 
-            <TabsContent value="wax">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Pure Beeswax Products</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Our beeswax is carefully filtered and processed to maintain its natural properties, perfect for
-                  crafting, cosmetics, and home use.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.wax.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="supplements">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black
-                ">Natural Health Supplements</h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Harness the power of the hive with our range of natural supplements, each packed with unique nutrients
-                  and health benefits.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.supplements.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Quality Assurance */}
-      <section className="py-20 bg-gradient-to-r from-green-50 to-amber-50">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8 text-black">Quality You Can Trust</h2>
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold text-xl">✓</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">Organic Certified</h3>
-              <p className="text-gray-600">All products meet strict organic standards</p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold text-xl">★</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">Premium Quality</h3>
-              <p className="text-gray-600">Rigorous testing ensures the highest quality</p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold text-xl">♻</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">Sustainable</h3>
-              <p className="text-gray-600">Environmentally responsible production</p>
-            </div>
-            <div>
-              <div className="w-16 h-16 bg-[#BB4D00] rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-white font-bold text-xl">❤</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2 text-black">Fair Trade</h3>
-              <p className="text-gray-600">Supporting local beekeeping communities</p>
-            </div>
-          </div>
+              {categories.map((category) => (
+                <TabsContent key={category} value={category}>
+                  <div className="text-center mb-12">
+                    <h2 className="text-3xl font-bold mb-4 text-black capitalize">
+                      {category} Products
+                    </h2>
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                      Browse our selection of premium {category} products.
+                    </p>
+                  </div>
+                  {productsByCategory[category].length === 0 ? (
+                    <p className="text-center text-gray-500">No products found.</p>
+                  ) : (
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      {productsByCategory[category].map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                      ))}
+                    </div>
+                  )}
+                </TabsContent>
+              ))}
+            </Tabs>
+          )}
         </div>
       </section>
     </div>
-  )
+  );
 }

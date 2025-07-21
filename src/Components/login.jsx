@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Notify } from "notiflix";
-
+import { useUser } from "@/context/userContext";
 export default function LoginPage() {
+  const { login } = useUser();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +32,7 @@ export default function LoginPage() {
       localStorage.setItem("userEmail", decoded.email);
       localStorage.setItem("user", JSON.stringify(user));
       Notify.success("Login successful");
+     login(user);
 
       // Redirect by role
       if (decoded.role === "admin") router.push("/");

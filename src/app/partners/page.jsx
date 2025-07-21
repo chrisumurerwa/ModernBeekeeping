@@ -10,34 +10,45 @@ export default function PartnersPage() {
     hotels: [
       {
         name: "Four Seasons",
-      
-        logo: "honey-logo-design.jpg", 
-       
+
+        email: "fourseasons@gmail.com",
+        logo: "honey-logo-design.jpg", // Make sure this is in public/
+        type: "Restaurant",
       },
       {
         name: "Aman Resorts",
-        
-        logo: "honey-logo.jpg", 
-       
+        email: "amanresorts@gmail.com",
+        logo: "honey-logo.jpg", // Make sure this is in public/
+        type: "Resort",
       },
       {
         name: "The Ritz-Carlton",
-        
-        logo: "retro-bee-logo.jpg", 
-       
+        email: "ritzcalton@gmail.com",
+        logo: "retro-bee-logo.jpg", // Make sure this is in public/
+        type: "Hotel",
       },
     ],
   };
 
   const PartnerCard = ({ partner }) => (
-    <div className="relative w-40 h-40 overflow-hidden rounded-full border border-gray-200 shadow hover:shadow-md transition-shadow">
-      <Image
-        src={`/${partner.logo}`}
-        alt={`${partner.name} Logo`}
-        fill
-        className="object-cover"
-      />
-    </div>
+    <Card className="border-0 rounded-xl shadow hover:shadow-lg transition-shadow">
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div className="relative h-12 w-32">
+            <Image
+              className="object-cover w-full h-full rounded-lg"
+              src={`/${partner.logo}`}
+              alt={`${partner.name} Logo`}
+              fill
+            />
+          </div>
+          <Badge className="bg-amber-100 text-amber-800">{partner.type}</Badge>
+        </div>
+        <h3 className="text-xl font-bold mb-2">{partner.name}</h3>
+        <p className="text-gray-600">{partner.email}</p>
+      </CardContent>
+    </Card>
+
   );
   
   
@@ -65,7 +76,9 @@ export default function PartnersPage() {
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4 text-black">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4 text-amber-300">
+
+            <h2 className="text-5xl font-bold mb-4 text-amber-800">
+
               Our Partners
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -73,11 +86,13 @@ export default function PartnersPage() {
               their breakfast services, spa treatments, and exclusive amenities.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center items-center gap-20">
-      {partners.hotels.map((partner, index) => (
-        <PartnerCard key={index} partner={partner} />
-      ))}
-    </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {partners.hotels.map((partner, index) => (
+              <PartnerCard key={index} partner={partner} />
+            ))}
+          </div>
+
         </div>
       </section>
 

@@ -6,11 +6,7 @@ import {
 import { Product } from './productEntity';
 import { Token } from './Token';
 export enum UserRole {
-  ADMIN = 'admin',
-  USER='user',
-  NUTRITIONIST = 'nutritionist',
-  COACH = 'coach',
-  RESTAURANT_OWNER = 'restaurantOwner',
+  ADMIN = 'admin'
 }
  
 @Entity()
@@ -33,16 +29,6 @@ export class User {
   enum: UserRole,
 })
 role!: UserRole;
-
-
-  @Column()
-  otp!: number;
-
-  @Column({ type: 'timestamp', nullable: true })
-  otpExpires!: Date;
-
-  @Column({ default: false })
-  verified!: boolean;
 
   @CreateDateColumn()
   createdAt!: Date;

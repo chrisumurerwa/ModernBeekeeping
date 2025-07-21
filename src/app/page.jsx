@@ -13,86 +13,172 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../Components/ui/accordion";
-import { HelpCircle, Package, Leaf, Globe, Shield, Heart } from "lucide-react";
-
+import {Package} from "lucide-react";
+import { useCart } from "../context/CartContext";
+import {Notify} from "notiflix";
+import { Delete,PencilIcon} from "lucide-react";
 export default function Page() {
-  const images = [
+  const { addToCart,cart } = useCart();
+  const [user, setUser] = useState(null);
+  const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+     const images = [
     "/images/bees11.jpg",
     "/images/bees9.jpg",
     "/images/jar.jpg",
   ];
 
   const [currentImage, setCurrentImage] = useState(0);
-
-  useEffect(() => {
+const [productsByCategory, setProductsByCategory] = useState({});
+  const [loadingProductId, setLoadingProductId] = useState(null);
+  const [addedProductId, setAddedProductId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+    useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % images.length);
     }, 3000); // Change image every 4 seconds
     return () => clearInterval(interval);
   }, []);
+  
+    useEffect(() => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }, []);
+  
+    useEffect(() => {
+      async function fetchProducts() {
+        try {
+         const res = await fetch("http://localhost:4000/product/getAllProduct");
+          const data = await res.json();
 
-  //product staff
-  const products = {
-    honey: [
-      {
-        id: 1,
-        name: "Raw Wildflower Honey",
-        price: "$24.99",
-        image: "/Honey1.jpg",
-        description: "Pure, unprocessed honey with natural enzymes intact",
-        badges: ["Organic", "Raw"],
-        rating: 4.9,
-      },
-      {
-        id: 2,
-        name: "Acacia Honey",
-        price: "$28.99",
-        image: "/Honey2.jpg",
-        description: "Light, delicate honey with rich floral notes and a smooth, golden finish",
-        badges: ["Premium", "Limited"],
-        rating: 4.8,
-      },
-      {
-        id: 3,
-        name: "Manuka Honey",
-        price: "$89.99",
-        image: "/Honey3.jpg",
-        description: "Therapeutic honey with unique healing properties",
-        badges: ["Medical Grade", "UMF 15+"],
-      },
-    ],}
-    const ProductCard = ({ product }) => (
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
-          <div className="relative h-64 overflow-hidden">
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          </div>
-          <CardContent className="p-6">
-            <div className="flex items-center mb-2">
+              if (data.success) {
+              const firstThree = data.data.slice(0, 3); // Fata 3 za mbere
+                setProducts(firstThree);
+               }
+               else {
+            console.error("Failed to fetch products:", data.message);
+           }
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+  
+      fetchProducts();
+    }, []);
+  
+    const handleDelete = async (productId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+  
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`http://localhost:4000/product/deleteProduct/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const data = await res.json();
+  
+      if (data.success) {
+        // Remove from UI
+        setProducts((prev) => {
+          const newState = { ...prev };
+          for (const key in newState) {
+            newState[key] = newState[key].filter((p) => p.id !== productId);
+          }
+          return newState;
+        });
+  
+        Notify.success("Product deleted successfully!");
+      } else {
+        Notify.failure("Failed to delete product");
+      }
+    } catch (error) {
+      console.error("Delete error:", error);
+      Notify.failure("Something went wrong while deleting");
+    }
+  };
+  
+   
+    if (loading) return <p className="text-center mt-10">Loading products...</p>;
+  
+      const ProductCard = ({ product }) => {
+        const alreadyInCart = cart.some((item) => item.id === product.id);
+    
+        const handleAddToCart = () => {
+          if (alreadyInCart) return;
+          setLoadingProductId(product.id);
+          setTimeout(() => {
+            addToCart(product);
+            setLoadingProductId(null);
+            setAddedProductId(product.id);
+            Notify.success("Product added to cart");
+          }, 1000);
+        };
+    
+        return (
+          <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 group border-0">
+            <div className="relative h-64 overflow-hidden">
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                priority
+              />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
-            <p className="text-gray-600 mb-4">{product.description}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold text-amber-600">{product.price}</span>
-              <Button 
-                className="bg-amber-600 text-white hover:bg-amber-700" 
-                suppressHydrationWarning={true}
-                onClick={() => {
-                  addToCart(product)
-                  toast.success("Added to cart ")
-                }}
-              >
-                <ShoppingCart className="w-4 h-4 mr-2" />
-                Add to Cart
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      )
+            <CardContent className="p-6">
+              <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
+              <p className="text-gray-600 mb-4">{product.description}</p>
+              <div className="flex justify-between items-center">
+                <span className="text-2xl font-bold text-amber-600">${product.price}</span>
+    
+                {user ? (
+                  <Button
+                    className="bg-amber-600 text-white hover:bg-amber-700"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    <Delete className="w-4 h-4 mr-2" /> Delete
+                  </Button>
+                ) : (
+                  <Button
+                    disabled={alreadyInCart || loadingProductId === product.id}
+                    onClick={handleAddToCart}
+                    className={`flex items-center gap-2 ${
+                      alreadyInCart ? "bg-amber-600 cursor-not-allowed" : "bg-amber-600 hover:bg-amber-700"
+                    } text-white px-4 py-2 rounded-md transition-all duration-300`}
+                  >
+                    {loadingProductId === product.id ? (
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    ) : alreadyInCart ? (
+                      "In Cart"
+                    ) : addedProductId === product.id ? (
+                      "Added ✓"
+                    ) : (
+                      <>
+                        <ShoppingCart className="w-4 h-4" />
+                        Add to Cart
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        );
+      };
+    
+      if (loading) return <p className="text-center mt-10">Loading products...</p>;
+ 
+
+
 
        const faqCategories = [
     {
@@ -215,15 +301,14 @@ export default function Page() {
       </div>
       <div className="mb-5">
         <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4 text-black">Premium Honey Collection</h2>
+                <h2 className="text-3xl font-bold mb-4 text-black">Wild Honey</h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Our honey is harvested with care, maintaining all natural enzymes and nutrients that make each variety
-                  unique and beneficial.
+               Crafted by Nature, Honored by Tradition. Our wild honey is more than just a product; it’s a heritage.
                 </p>
               </div>
 
   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {products.honey.map((product) => (
+                {products.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>

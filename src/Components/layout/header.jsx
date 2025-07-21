@@ -1,26 +1,29 @@
 "use client";
-import { useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Menu, ShoppingCart, Search } from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
+import { useUser } from "../../context/userContext";
+import { useCart } from "../../context/CartContext";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(null);
-     const [isDropdownOpen,setIsDropdownOpen] = useState(false); 
-    const toggleDropdown=()=>
-    {
-      setIsDropdownOpen(!isDropdownOpen);
-    }
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user, logout } = useUser();
+  const { cart } = useCart();
+  const router = useRouter();
 
-    const HandleLogout=()=>
-    {
-      localStorage.removeItem("token")
-      localStorage.removeItem("user")
-      localStorage.removeItem("userName")
-      localStorage.removeItem("userId")
-    }
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const HandleLogout = () => {
+    logout();
+    router.push("/");
+  };
+
   const navigation = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
@@ -28,12 +31,7 @@ export default function Header() {
     { name: "Partners", href: "/partners" },
     { name: "Contact", href: "/contact" },
   ];
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-amber-100">
       <div className="container mx-auto px-4">
@@ -63,44 +61,54 @@ export default function Header() {
           </nav>
 
           {/* Actions */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 relative">
             {user ? (
-              <div>
-          <div
-  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md"
-  onClick={toggleDropdown}
->
-  <img
-    src="/no-profilebg.png"
-    alt="Profile"
-    className="w-10 h-10 rounded-full object-cover"
-  />
-  <div className="text-sm font-medium text-gray-800">{user.name}</div>
-  </div>
-{isDropdownOpen && (
-  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-    <ul className="py-2">
-      <li
-        onClick={HandleLogout}
-        className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-red-600"
-      >
-        Logout
-      </li>
-     
-    </ul>
-  </div>
-)}
+              <div className="relative">
+                <div
+                  className="flex items-center space-x-2 cursor-pointer hover:bg-gray-100 px-2 py-1 rounded-md"
+                  onClick={toggleDropdown}
+                >
+                  <img
+                    src="/no-profilebg.png"
+                    alt="Profile"
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div className="text-sm font-medium text-gray-800">{user.name}</div>
+                </div>
 
-          </div>
-        ) :(<>
-            <Link href="/cart">
-              <Button variant="ghost" size="sm">
-                <ShoppingCart className="w-4 h-4 text-black" /> {/* Set icon to black */}
-              </Button>
-            </Link>
-            <Button className="hidden md:flex bg-amber-600 hover:bg-amber-700 text-white">Shop Now</Button>
-            </>
-        )}
+                {isDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+                    <ul className="py-2">
+                      <li
+                        onClick={HandleLogout}
+                        className="px-4 py-2 hover:bg-amber-100 cursor-pointer text-amber-700"
+                      >
+                        Logout
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link href="/cart" className="relative">
+                  <Button variant="ghost" size="sm" className="relative">
+                    <ShoppingCart className="w-6 h-6 text-black" />
+
+                    {cart.length > 0 && (
+                      <span className="absolute top-0 right-0 -mt-1 -mr-1 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+                        {cart.length}
+                      </span>
+                    )}
+                  </Button>
+                </Link>
+
+                <Button className="hidden md:flex bg-amber-600 hover:bg-amber-700 text-white">
+                  Shop Now
+                </Button>
+              </>
+            )}
+
             {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
@@ -121,7 +129,9 @@ export default function Header() {
                     </Link>
                   ))}
                   <div className="pt-4 border-t">
-                    <Button className="w-full bg-amber-600 hover:bg-amber-700">Shop Now</Button>
+                    <Button className="w-full bg-amber-600 hover:bg-amber-700">
+                      Shop Now
+                    </Button>
                   </div>
                 </div>
               </SheetContent>

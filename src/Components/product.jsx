@@ -119,11 +119,11 @@ export default function ProductsPage() {
           <h3 className="text-xl font-bold mb-2 text-black">{product.name}</h3>
           <p className="text-gray-600 mb-4">{product.description}</p>
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold text-amber-600">${product.price}</span>
+            <span className="text-2xl font-bold text-amber-300">${product.price}</span>
 
             {user ? (
               <Button
-                className="bg-amber-600 text-white hover:bg-amber-700"
+                className="bg-amber-300 text-white hover:bg-amber-300"
                 onClick={() => handleDelete(product.id)}
               >
                 <Delete className="w-4 h-4 mr-2" /> Delete
@@ -133,7 +133,7 @@ export default function ProductsPage() {
                 disabled={alreadyInCart || loadingProductId === product.id}
                 onClick={handleAddToCart}
                 className={`flex items-center gap-2 ${
-                  alreadyInCart ? "bg-amber-600 cursor-not-allowed" : "bg-amber-600 hover:bg-amber-700"
+                  alreadyInCart ? "bg-amber-300 cursor-not-allowed" : "bg-amber-300 hover:bg-amber-300"
                 } text-white px-4 py-2 rounded-md transition-all duration-300`}
               >
                 {loadingProductId === product.id ? (
@@ -165,7 +165,7 @@ export default function ProductsPage() {
       {/* Hero Section */}
       <section
         className={`${
-          user ? "bg-amber-700" : "bg-gradient-to-r from-amber-600 to-amber-700"
+          user ? "bg-amber-300" : "bg-gradient-to-r from-amber-300 to-amber-300"
         } text-white relative h-40 flex items-center justify-center gap-10`}
       >
         <div className="text-center p-10">
@@ -175,7 +175,7 @@ export default function ProductsPage() {
         </div>
         {user && (
           <Link href="/addProduct">
-            <Button className="bg-white text-amber-700 hover:bg-gray-50">Add Product</Button>
+            <Button className="bg-white text-amber-3it00 hover:bg-gray-50">Add Product</Button>
           </Link>
         )}
       </section>

@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/Components/ui/button";
-import { Card, CardContent } from "@/Components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/ui/tabs";
+import { Button } from "../Components/ui/button";
+import { Card, CardContent } from "../Components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../Components/ui/tabs";
 import { ShoppingCart, Delete } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { Notify } from "notiflix";

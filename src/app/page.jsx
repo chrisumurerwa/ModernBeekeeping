@@ -3,9 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Card } from "@/Components/ui/card";
-import { CardContent } from "@/Components/ui/card";
-import { Button } from "@/Components/ui/button";
+import { Card } from "../Components/ui/card";
+import { CardContent } from "../Components/ui/card";
+import { Button } from "../Components/ui/button";
 import { ShoppingCart } from "lucide-react";
 import {
   Accordion,

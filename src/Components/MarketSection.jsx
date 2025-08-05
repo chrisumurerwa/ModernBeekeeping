@@ -113,6 +113,7 @@ export default function MarketsPage() {
           </div>
         </div>
       </section>
+
     </div>
   )
 }

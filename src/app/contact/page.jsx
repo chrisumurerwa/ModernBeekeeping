@@ -1,6 +1,5 @@
 "use client";
-import { useState,useEffect} from "react";
-import Image from "next/image";
+import { useState } from "react";
 import { Button } from "../../Components/ui/button";
 import { Card, CardContent } from "../../Components/ui/card";
 import { Input } from "../../Components/ui/input";
@@ -13,17 +12,9 @@ import {
   SelectValue,
 } from "../../Components/ui/select";
 import { MapPin, Phone, Mail, Clock, MessageSquare } from "lucide-react";
+import ContactMap from "../../Components/Map/ContactMap";
 
-import { Notify } from "notiflix";
-import ContactListPage from "../../Components/contactListPage"
 export default function ContactPage() {
-const [user,setUser]=useState(null)
- useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -41,47 +32,23 @@ const [user,setUser]=useState(null)
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    // handle form submission here
+  };
 
-  const handleSubmit = async (e) => {
-  e.preventDefault();
-
-  try {
-    const res = await fetch("http://localhost:4000/contact/postContact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      Notify.success(data.message);
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      });
-    } else {
-      Notify.failure(data.message || "Something went wrong");
-    }
-  } catch (error) {
-    console.error("Failed to send contact:", error);
-    alert("Error submitting the form. Please try again.");
-  }
-};
-
- 
+  const handleWhatsApp = () => {
+    const message = "Hello! I'm interested in your honey products.";
+    const phoneNumber = "+250794469581";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   return (
     <div className="min-h-screen">
-      {user?(<ContactListPage/>):(
-        <div>
-      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r bg-amber-600">
+      {/* Hero */}
+      <section className="relative h-64 flex items-center justify-center bg-gradient-to-r bg-amber-300">
         <div className="text-center text-white">
           <h1 className="text-5xl font-bold mb-4">Contact Us</h1>
           <p className="text-xl">Get in touch with our team worldwide</p>
@@ -178,64 +145,54 @@ const [user,setUser]=useState(null)
             {/* Contact Info */}
             <div className="space-y-6">
               <h2 className="text-3xl font-bold mb-6 text-black">Get in Touch</h2>
-
-              <div className="space-y-6">
-                <Card className="border-none shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start">
-                      <MapPin className="w-6 h-6 text-amber-600 mr-4 mt-1" />
-                      <div>
-                        <h3 className="font-bold mb-2 text-black
-                        ">Headquarters</h3>
-                        <p className="text-gray-600">
-                          KG 15 Avenue, Kimisagara
-                          <br />
-                          Kigali, Rwanda
-                          <br />
-                          P.O. Box 1234
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-none shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start">
-                      <Phone className="w-6 h-6 text-amber-600 mr-4 mt-1" />
-                      <div>
-                        <h3 className="font-bold mb-2 text-black">Phone</h3>
-                        <p className="text-gray-600">
-                          Main: +250 788 123 456
-                          <br />
-                          Sales: +250 788 123 457
-                          <br />
-                          Support: +250 788 123 458
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-none shadow-lg">
-                  <CardContent className="p-6">
-                    <div className="flex items-start">
-                      <Mail className="w-6 h-6 text-amber-600 mr-4 mt-1" />
-                      <div>
-                        <h3 className="font-bold mb-2 text-black">Email</h3>
-                        <p className="text-gray-600">
-                          General: info@modernbeekeeping.com
-                          <br />
-                          Sales: sales@modernbeekeeping.com
-                          <br />
-                          Support: support@modernbeekeeping.com
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
+              <Card className="border-none shadow-lg">
+                <CardContent className="p-6 flex items-start">
+                  <MapPin className="w-6 h-6 text-amber-300 mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-bold mb-2 text-black">Headquarters</h3>
+                    <p className="text-gray-600">KG 15 Avenue, Kimisagara, Kigali, Rwanda</p>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border-none shadow-lg">
+                <CardContent className="p-6 flex items-start">
+                  <Phone className="w-6 h-6 text-amber-300 mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-bold mb-2 text-black">Phone</h3>
+                    <p className="text-gray-600">Main: +250 788 123 456</p>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border-none shadow-lg">
+                <CardContent className="p-6 flex items-start">
+                  <Mail className="w-6 h-6 text-amber-300 mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-bold mb-2 text-black">Email</h3>
+                    <p className="text-gray-600">info@modernbeekeeping.com</p>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border-none shadow-lg">
+                <CardContent className="p-6 flex items-start">
+                  <Clock className="w-6 h-6 text-amber-300 mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-bold mb-2 text-black">Business Hours</h3>
+                    <p className="text-gray-600">Mon–Fri: 8:00–18:00, Sat: 9:00–14:00, Sun: Closed</p>
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className="border-none shadow-lg bg-green-50">
+                <CardContent className="p-6 flex items-start">
+                  <MessageSquare className="w-6 h-6 text-green-600 mr-4 mt-1" />
+                  <div>
+                    <h3 className="font-bold mb-2 text-green-800">WhatsApp Business</h3>
+                    <p className="text-green-700 mb-3">For quick inquiries and orders</p>
+                    <Button onClick={handleWhatsApp} className="bg-green-600 hover:bg-green-700">
+                      Chat on WhatsApp
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
@@ -245,36 +202,12 @@ const [user,setUser]=useState(null)
       <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-black">Visit Our Headquarters</h2>
-            <p className="text-lg text-gray-600">
-              Located in the heart of Kigali, Rwanda
-            </p>
+            <h2 className="text-3xl font-bold mb-2 text-black">Visit Our Headquarters</h2>
+            <p className="text-lg text-gray-600">Located in the heart of Kigali, Rwanda</p>
           </div>
-          <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
-            <Image
-              src="/images/thread.jpg?height=400&width=800"
-              alt="Map showing our location in Kigali, Rwanda"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-              <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-                <MapPin className="w-8 h-8 text-amber-600 mx-auto mb-2" />
-                <h3 className="font-bold mb-1 text-black">Modern Beekeeping Company</h3>
-                <p className="text-sm text-gray-600">
-                  KG 15 Avenue, Kigali, Rwanda
-                </p>
-               
-              </div>
-            </div>
-          </div>
+          <ContactMap />
         </div>
       </section>
-      </div>
-      )}
-     
-
-
     </div>
   );
 }

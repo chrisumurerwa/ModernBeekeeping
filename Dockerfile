@@ -1,22 +1,22 @@
-# syntax=docker/dockerfile:1
+# syntax = docker/dockerfile:1
 
-FROM node:18-alpine as build
+# Adjust NODE_VERSION as desired
+ARG NODE_VERSION=22.16.0
+FROM node:${NODE_VERSION}-slim AS base
+
+LABEL andasy_launch_runtime="Next.js"
+
+# Next.js app lives here
 WORKDIR /app
 
-# Copy files and install deps
-COPY package*.json ./
-RUN npm install
+# Set production environment
+ENV NODE_ENV="production"
+
 COPY . .
-RUN npm run build
 
-# Serve build using `serve`
-FROM node:18-alpine as prod
-RUN npm install -g serve
-WORKDIR /app
-COPY --from=build /app/dist ./dist
+# Install packages needed to build node modules
+RUN npm ci --include=dev
 
-# Use environment PORT or fallback to 3000
-ENV PORT=3000
-EXPOSE 3000
+RUN npx next build --experimental-build-mode compile
 
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
+ENTRYPOINT ["npx", "next", "start", "--port", "3000", "-H", "::"]

@@ -23,9 +23,9 @@ export default function Page() {
   const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
      const images = [
-    "/images/bees11.jpg",
-    "/images/bees9.jpg",
-    "/images/jar.jpg",
+    "/bees11.jpg",
+    "/bees9.jpg",
+    "/jar.jpg",
   ];
 
   const [currentImage, setCurrentImage] = useState(0);

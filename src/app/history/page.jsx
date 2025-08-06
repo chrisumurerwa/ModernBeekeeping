@@ -30,7 +30,7 @@ export default function History() {
         {/* Image at the Top */}
         <div className="text-center mb-8">
           <Image
-            src="/images/beehive.jpg" // Match the image from the card
+            src="/beehive.jpg" // Match the image from the card
             alt="History Image"
             width={300}
             height={300}

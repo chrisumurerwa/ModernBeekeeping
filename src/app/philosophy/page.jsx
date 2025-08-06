@@ -30,7 +30,7 @@ export default function Philosophy() {
         {/* Image at the Top */}
         <div className="text-center mb-8">
           <Image
-            src="/images/jar.jpg" // Match the image from the card
+            src="/jar.jpg" // Match the image from the card
             alt="Philosophy Image"
             width={300}
             height={300}

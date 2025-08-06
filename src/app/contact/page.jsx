@@ -35,7 +35,7 @@ export default function ContactPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    // handle form submission here
+    // Add your form submission logic here
   };
 
   const handleWhatsApp = () => {
@@ -67,9 +67,9 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-medium mb-2 text-black">First Name</label>
                     <Input
-                      className="text-gray-500 border border-gray-300"
                       name="firstName"
                       placeholder="Your first name"
+                      className="text-gray-500 border border-gray-300"
                       value={formData.firstName}
                       onChange={handleInputChange}
                     />
@@ -77,9 +77,9 @@ export default function ContactPage() {
                   <div>
                     <label className="block text-sm font-medium mb-2 text-black">Last Name</label>
                     <Input
-                      className="text-gray-500 border border-gray-300"
                       name="lastName"
                       placeholder="Your last name"
+                      className="text-gray-500 border border-gray-300"
                       value={formData.lastName}
                       onChange={handleInputChange}
                     />
@@ -90,8 +90,8 @@ export default function ContactPage() {
                   <Input
                     type="email"
                     name="email"
-                    className="text-gray-500 border border-gray-300"
                     placeholder="your.email@example.com"
+                    className="text-gray-500 border border-gray-300"
                     value={formData.email}
                     onChange={handleInputChange}
                   />
@@ -101,31 +101,35 @@ export default function ContactPage() {
                   <Input
                     type="tel"
                     name="phone"
-                    className="text-gray-500 border border-gray-300"
                     placeholder="+250 788 123 456"
+                    className="text-gray-500 border border-gray-300"
                     value={formData.phone}
                     onChange={handleInputChange}
                   />
                 </div>
+
+                {/* ✅ Working Subject Dropdown */}
                 <div>
                   <label className="block text-sm font-medium mb-2 text-black">Subject</label>
                   <Select
-                    onValueChange={(value) =>
-                      setFormData((prev) => ({ ...prev, subject: value }))
-                    }
-                  >
-                    <SelectTrigger className="text-gray-500 border border-gray-300">
-                      <SelectValue placeholder="Select a subject" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-amber-50 text-black">
-                      <SelectItem value="general">General Inquiry</SelectItem>
-                      <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                      <SelectItem value="wholesale">Wholesale Orders</SelectItem>
-                      <SelectItem value="support">Customer Support</SelectItem>
-                      <SelectItem value="media">Media & Press</SelectItem>
-                    </SelectContent>
-                  </Select>
+  value={formData.subject}
+  onValueChange={(value) =>
+    setFormData((prev) => ({ ...prev, subject: value }))
+  }
+>
+  <SelectTrigger className="w-full" >
+    <SelectValue placeholder="Select a subject" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="general">General Inquiry</SelectItem>
+    <SelectItem value="partnership">Partnership Opportunity</SelectItem>
+    <SelectItem value="wholesale">Wholesale Orders</SelectItem>
+    <SelectItem value="support">Customer Support</SelectItem>
+    <SelectItem value="media">Media & Press</SelectItem>
+  </SelectContent>
+</Select>
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium mb-2 text-black">Message</label>
                   <Textarea
@@ -211,4 +215,3 @@ export default function ContactPage() {
     </div>
   );
 }
-1

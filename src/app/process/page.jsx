@@ -30,7 +30,7 @@ export default function Process() {
         {/* Image at the Top */}
         <div className="text-center mb-8">
           <Image
-            src="/images/bees10.jpg" // Match the image from the card
+            src="/bees10.jpg" // Match the image from the card
             alt="Process Image"
             width={300}
             height={300}

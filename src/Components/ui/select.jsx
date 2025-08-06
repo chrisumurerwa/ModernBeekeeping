@@ -1,23 +1,51 @@
-"use client";
-
 import React from "react";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { Check, ChevronDown } from "lucide-react";
 
-export function Select({ children }) {
-  return <div>{children}</div>;
-}
+// Root Component
+export const Select = SelectPrimitive.Root;
 
-export function SelectTrigger({ children }) {
-  return <button className="border px-4 py-2 rounded">{children}</button>;
-}
+// Trigger
+export const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={`flex items-center justify-between px-4 py-2 rounded-md border border-gray-300 text-sm text-gray-700 shadow-sm bg-white focus:outline-none focus:ring-2 focus:ring-amber-300 ${className}`}
+    {...props}
+  >
+    {children}
+    <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+  </SelectPrimitive.Trigger>
+));
+SelectTrigger.displayName = "SelectTrigger";
 
-export function SelectValue({ placeholder }) {
-  return <span>{placeholder}</span>;
-}
+// Value placeholder
+export const SelectValue = SelectPrimitive.Value;
 
-export function SelectContent({ children }) {
-  return <div className="border mt-2 p-2">{children}</div>;
-}
+// Content (Dropdown)
+export const SelectContent = React.forwardRef(({ children, className, ...props }, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
+      className={`bg-white border border-gray-300 rounded-md shadow-lg z-50 ${className}`}
+      {...props}
+    >
+      <SelectPrimitive.Viewport className="p-1">{children}</SelectPrimitive.Viewport>
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+));
+SelectContent.displayName = "SelectContent";
 
-export function SelectItem({ value, children }) {
-  return <div data-value={value}>{children}</div>;
-}
+// Each Item in dropdown
+export const SelectItem = React.forwardRef(({ children, className, ...props }, ref) => (
+  <SelectPrimitive.Item
+    ref={ref}
+    className={`relative cursor-pointer select-none px-4 py-2 rounded-sm text-sm text-black hover:bg-amber-100 ${className}`}
+    {...props}
+  >
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemIndicator className="absolute right-2 top-2">
+      <Check className="h-4 w-4 text-green-600" />
+    </SelectPrimitive.ItemIndicator>
+  </SelectPrimitive.Item>
+));
+SelectItem.displayName = "SelectItem";

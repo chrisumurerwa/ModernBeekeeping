@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { Notify } from "notiflix";
-import { useUser } from "@/context/userContext";
+import { useUser } from "../context/userContext";
 export default function LoginPage() {
   const { login } = useUser();
   const router = useRouter();

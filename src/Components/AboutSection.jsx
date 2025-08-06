@@ -15,7 +15,7 @@ export default function AboutPage() {
     {
       name: "Michael Chen",
       role: "Head of Operations",
-      image: "/Mentor2.png",
+      image: "/m2-DzCtgX_A.jpg",
       bio: "Michael oversees our global operations and ensures quality standards across all our products.",
       email: "michael.chen@mukazi.com",
     },
